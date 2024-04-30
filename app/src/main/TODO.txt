@@ -1,0 +1,1 @@
+TODO: adicionar campo de 'custo medio de hospedagem' na tela de hospedagem que nao tá no prototipo
