@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.devmobile.viajei.database.model.UsuarioModel;
+
 public class DBOpenHelper extends SQLiteOpenHelper {
 
     private static final String NOME_BANCO = "viajei.db";
@@ -17,7 +19,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-       //  db.execSQL(ProdutoModel.CREATE_TABLE);
+        db.execSQL(UsuarioModel.CREATE_TABLE);
     }
 
     @Override

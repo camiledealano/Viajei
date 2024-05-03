@@ -1,24 +1,61 @@
 package com.devmobile.viajei;
 
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+import com.devmobile.viajei.database.dao.CriarUsuarioDAO;
+import com.devmobile.viajei.database.model.UsuarioModel;
 
 public class CriarUsuarioActivity extends AppCompatActivity {
+
+    private EditText nome;
+    private EditText email;
+    private EditText telefone;
+    private EditText senha;
+    private Button btnCriar;
+
+    private CriarUsuarioDAO criarUsuarioDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_login);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.login), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+        setContentView(R.layout.activity_criar_usuario);
+
+        nome = findViewById(R.id.nome);
+        email = findViewById(R.id.email);
+        telefone = findViewById(R.id.telefone);
+        senha = findViewById(R.id.senha);
+        btnCriar = findViewById(R.id.btnCriar);
+
+        btnCriar.setOnClickListener(v -> {
+            String nomeText = nome.getText().toString();
+            String emailText = email.getText().toString();
+            String telefoneText = telefone.getText().toString();
+            String senhaText = senha.getText().toString();
+
+            if (nomeText.isEmpty() || emailText.isEmpty() || telefoneText.isEmpty() || senhaText.isEmpty()) {
+                Toast.makeText(CriarUsuarioActivity.this, "Por favor, preencha todos os campos", Toast.LENGTH_SHORT).show();
+            } else {
+                UsuarioModel usuarioModel = new UsuarioModel();
+                usuarioModel.setNome(nomeText);
+                usuarioModel.setEmail(emailText);
+                usuarioModel.setTelefone(telefoneText);
+                usuarioModel.setSenha(senhaText);
+
+                try {
+                    criarUsuarioDAO = new CriarUsuarioDAO(CriarUsuarioActivity.this);
+                    criarUsuarioDAO.insert(usuarioModel);
+
+                    Toast.makeText(CriarUsuarioActivity.this, "Usuário criado com sucesso!", Toast.LENGTH_SHORT).show();
+                    //TODO: redirecionar pra home
+                } catch (Exception e) {
+                    Toast.makeText(CriarUsuarioActivity.this, "Erro ao inserir usuário: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
         });
     }
 }
