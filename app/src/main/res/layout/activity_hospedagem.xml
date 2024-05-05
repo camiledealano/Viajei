@@ -20,10 +20,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="2dp"
             android:text="Organize sua estadia"
             android:textStyle="bold"
             android:textSize="20sp"
+            android:textColorHint="@color/blue_primary" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="Destino: nomeDoLugar"
             android:textColorHint="@color/blue_primary" />
 
         <LinearLayout
@@ -40,6 +47,7 @@
                 android:layout_marginEnd="4dp"/>
 
             <EditText
+                android:id="@+id/custo_medio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Custo médio de hospedagem"
@@ -61,6 +69,7 @@
                 android:layout_marginEnd="4dp"/>
 
             <EditText
+                android:id="@+id/qtd_quartos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Número de quartos"
@@ -82,8 +91,8 @@
                 android:layout_marginEnd="4dp"/>
 
             <EditText
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:id="@+id/qtd_pessoas"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Número de pessoas"
                 android:inputType="number" />
@@ -104,8 +113,8 @@
                 android:layout_marginEnd="4dp"/>
 
             <EditText
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:id="@+id/qtd_noites"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Quantidade de noites"
                 android:inputType="number" />
@@ -122,11 +131,28 @@
             android:textStyle="bold"
             android:layout_margin="16dp" />
 
-        <Button
-            android:layout_width="150dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/avancar"
-            android:backgroundTint="@color/green_primary"/>
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnHospedagemCalcular"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:text="@string/calcular"
+                android:backgroundTint="@color/green_primary"
+                android:layout_marginEnd="15dp"/>
+
+            <Button
+                android:id="@+id/btnHospedagemAvancar"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:text="@string/avancar"
+                android:backgroundTint="@color/green_secondary"/>
+
+        </LinearLayout>
+
 
     </LinearLayout>
 

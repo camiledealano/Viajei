@@ -1,0 +1,1 @@
+//TODO: provavelmente vamos ter que adicionar o id do usuario junto com cada tela, pra quando for salvar no banco sabermos de quem é a simulação

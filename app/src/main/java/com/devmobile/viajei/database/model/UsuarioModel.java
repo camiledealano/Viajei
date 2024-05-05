@@ -1,9 +1,6 @@
 package com.devmobile.viajei.database.model;
 
-
-import com.devmobile.viajei.database.utils.DBCommons;
-
-public class UsuarioModel extends DBCommons {
+public class UsuarioModel {
 
     public static final String TABELA_NOME = "tb_usuario";
     public static final String ID = "_id";
@@ -28,6 +25,13 @@ public class UsuarioModel extends DBCommons {
     private String email;
     private String telefone;
     private String senha;
+
+    public UsuarioModel(String nome, String email, String telefone, String senha) {
+        this.nome = nome;
+        this.email = email;
+        this.telefone = telefone;
+        this.senha = senha;
+    }
 
     public int getId() {
         return id;

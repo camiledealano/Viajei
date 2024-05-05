@@ -2,5 +2,5 @@
     <string name="app_name">Viajei</string>
     <string name="total_parcial">Total: R$ </string>
     <string name="avancar">Avançar</string>
-    <string name="proximo">Próximo</string>
+    <string name="calcular">Calcular</string>
 </resources>

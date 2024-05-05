@@ -16,7 +16,6 @@ public class CriarUsuarioActivity extends AppCompatActivity {
     private EditText email;
     private EditText telefone;
     private EditText senha;
-    private Button btnCriar;
 
     private CriarUsuarioDAO criarUsuarioDAO;
 
@@ -29,7 +28,8 @@ public class CriarUsuarioActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         telefone = findViewById(R.id.telefone);
         senha = findViewById(R.id.senha);
-        btnCriar = findViewById(R.id.btnCriar);
+
+        Button btnCriar = findViewById(R.id.btnCriar);
 
         btnCriar.setOnClickListener(v -> {
             String nomeText = nome.getText().toString();
@@ -40,11 +40,12 @@ public class CriarUsuarioActivity extends AppCompatActivity {
             if (nomeText.isEmpty() || emailText.isEmpty() || telefoneText.isEmpty() || senhaText.isEmpty()) {
                 Toast.makeText(CriarUsuarioActivity.this, "Por favor, preencha todos os campos", Toast.LENGTH_SHORT).show();
             } else {
-                UsuarioModel usuarioModel = new UsuarioModel();
-                usuarioModel.setNome(nomeText);
-                usuarioModel.setEmail(emailText);
-                usuarioModel.setTelefone(telefoneText);
-                usuarioModel.setSenha(senhaText);
+                UsuarioModel usuarioModel = new UsuarioModel(
+                        nomeText,
+                        emailText,
+                        telefoneText,
+                        senhaText
+                );
 
                 try {
                     criarUsuarioDAO = new CriarUsuarioDAO(CriarUsuarioActivity.this);
