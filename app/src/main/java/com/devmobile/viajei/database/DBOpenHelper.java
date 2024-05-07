@@ -19,40 +19,6 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         super(context, NOME_BANCO, null, VERSAO_BANCO);
     }
 
-    public UsuarioModel getUsuarioPorEmail(String email) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        UsuarioModel usuario = null;
-
-        String[] projection = {
-                UsuarioModel.ID,
-                UsuarioModel.EMAIL,
-                UsuarioModel.SENHA
-        };
-
-        String selection = UsuarioModel.EMAIL + " = ?";
-        String[] selectionArgs = { email };
-
-        Cursor cursor = db.query(
-                UsuarioModel.TABELA_NOME,
-                projection,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                null
-        );
-
-        if (cursor.moveToFirst()) {
-            int id = cursor.getInt(cursor.getColumnIndexOrThrow(UsuarioModel.ID));
-            String senha = cursor.getString(cursor.getColumnIndexOrThrow(UsuarioModel.SENHA));
-            usuario = new UsuarioModel(id, email, senha);
-        }
-
-        cursor.close();
-        db.close();
-
-        return usuario;
-    }
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(UsuarioModel.CREATE_TABLE);

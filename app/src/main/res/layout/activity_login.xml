@@ -20,6 +20,7 @@
                 android:src="@drawable/logo"/>
 
             <EditText
+                android:id="@+id/loginEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
@@ -27,6 +28,7 @@
                 android:textColorHint="@color/black"/>
 
             <EditText
+                android:id="@+id/loginSenha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
@@ -35,6 +37,7 @@
                 android:textColorHint="@color/black"/>
 
             <TextView
+                android:id="@+id/criarConta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
@@ -44,6 +47,7 @@
                 android:textSize="15dp"/>
 
             <Button
+                android:id="@+id/btnLogin"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"

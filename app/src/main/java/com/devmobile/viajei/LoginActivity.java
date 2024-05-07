@@ -4,29 +4,35 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.devmobile.viajei.database.DBOpenHelper;
+import com.devmobile.viajei.database.dao.LoginDAO;
 import com.devmobile.viajei.database.model.UsuarioModel;
 
 public class LoginActivity extends AppCompatActivity {
 
     private EditText campoEmail, campoSenha;
-    private Button botaoLogin;
-    private DBOpenHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        campoEmail = findViewById(R.id.editTextEmail);
-        campoSenha = findViewById(R.id.editTextSenha);
-        botaoLogin = findViewById(R.id.buttonLogin);
-        databaseHelper = new DBOpenHelper(this);
+        campoEmail = findViewById(R.id.loginEmail);
+        campoSenha = findViewById(R.id.loginSenha);
 
-        botaoLogin.setOnClickListener(v -> fazerLogin());
+        TextView textViewCriarConta = findViewById(R.id.criarConta);
+        textViewCriarConta.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, CriarUsuarioActivity.class);
+            startActivity(intent);
+        });
+
+        Button btnLogin = findViewById(R.id.btnLogin);
+
+        btnLogin.setOnClickListener(v -> fazerLogin());
     }
 
     private void fazerLogin() {
@@ -38,9 +44,8 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        DBOpenHelper dbHelper = new DBOpenHelper(this);
-        UsuarioModel usuario = dbHelper.getUsuarioPorEmail(email);
-
+        LoginDAO loginDAO = new LoginDAO(LoginActivity.this);
+        UsuarioModel usuario = loginDAO.getUsuarioPorEmail(email);
 
         if (usuario == null) {
             Toast.makeText(this, "Usuário com este email não existe", Toast.LENGTH_SHORT).show();

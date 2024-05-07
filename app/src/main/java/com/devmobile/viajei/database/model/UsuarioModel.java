@@ -33,6 +33,12 @@ public class UsuarioModel {
         this.senha = senha;
     }
 
+    public UsuarioModel(int id, String email, String senha) {
+        this.id = id;
+        this.email = email;
+        this.senha = senha;
+    }
+
     public int getId() {
         return id;
     }
