@@ -16,4 +16,6 @@ public abstract class AbstractDAO {
     protected void close() {
         db_helper.close();
     }
+
+
 }
