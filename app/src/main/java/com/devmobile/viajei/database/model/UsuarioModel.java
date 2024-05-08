@@ -39,6 +39,9 @@ public class UsuarioModel {
         this.senha = senha;
     }
 
+    public UsuarioModel() {
+    }
+
     public int getId() {
         return id;
     }

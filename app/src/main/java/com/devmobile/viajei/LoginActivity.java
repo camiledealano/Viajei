@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.devmobile.viajei.database.dao.CriarUsuarioDAO;
 import com.devmobile.viajei.database.dao.LoginDAO;
 import com.devmobile.viajei.database.model.UsuarioModel;
 
@@ -44,8 +45,8 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        LoginDAO loginDAO = new LoginDAO(LoginActivity.this);
-        UsuarioModel usuario = loginDAO.getUsuarioPorEmail(email);
+        CriarUsuarioDAO criarUsuarioDAO = new CriarUsuarioDAO(LoginActivity.this);
+        UsuarioModel usuario = criarUsuarioDAO.Select(email, senha);
 
         if (usuario == null) {
             Toast.makeText(this, "Usuário com este email não existe", Toast.LENGTH_SHORT).show();
