@@ -35,6 +35,14 @@ public class HospedagemActivity extends AppCompatActivity {
         Button btnCalcular = findViewById(R.id.btnHospedagemCalcular);
         Button btnAvancar  = findViewById(R.id.btnHospedagemAvancar);
 
+        SharedPreferences sharedPreferences   = PreferenceManager.getDefaultSharedPreferences(HospedagemActivity.this);
+        String destino = sharedPreferences.getString("destino", "");
+        int idUsuario  = sharedPreferences.getInt("idUsuario", -1);
+
+        TextView destinoTextView = findViewById(R.id.nome_destino);
+        String textoDestino = getString(R.string.destino) + " " + destino;
+        destinoTextView.setText(textoDestino);
+
         btnCalcular.setOnClickListener(v -> {
             String custoMedioStr = custoMedio.getText().toString();
             String qtdQuartosStr = qtdQuartos.getText().toString();
@@ -76,6 +84,7 @@ public class HospedagemActivity extends AppCompatActivity {
             Double totalHospedagemValue = Double.valueOf(hospedagemService.calcularTotalHospedagem(custoMedioValue, qtdNoitesValue, qtdQuartosValue));
 
             HospedagemModel hospedagemModel = new HospedagemModel(
+                    idUsuario,
                     custoMedioValue,
                     qtdQuartosValue,
                     qtdPessoasValue,
@@ -87,7 +96,6 @@ public class HospedagemActivity extends AppCompatActivity {
                 HospedagemDAO hospedagemDAO = new HospedagemDAO(HospedagemActivity.this);
                 hospedagemDAO.insert(hospedagemModel);
 
-                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(HospedagemActivity.this);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
 
                 editor.putInt("qtdPessoas", Integer.parseInt(qtdPessoasStr));

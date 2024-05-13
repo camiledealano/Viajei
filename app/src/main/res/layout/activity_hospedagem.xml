@@ -27,10 +27,11 @@
             android:textColorHint="@color/blue_primary" />
 
         <TextView
+            android:id="@+id/nome_destino"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:text="Destino: nomeDoLugar"
+            android:text="@string/destino"
             android:textColorHint="@color/blue_primary" />
 
         <LinearLayout
