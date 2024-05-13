@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
         UsuarioModel usuario = criarUsuarioDAO.Select(email, senha);
 
         if (usuario == null) {
-            Toast.makeText(this, "Usuário com este email não existe", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Usuário não encontrado", Toast.LENGTH_SHORT).show();
             return;
         }
 

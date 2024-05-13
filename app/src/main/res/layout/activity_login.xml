@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:hint="Usuário"
+                android:hint="E-mail"
                 android:textColorHint="@color/black"/>
 
             <EditText
@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:gravity="end"
-                android:hint="Não tem conta? Criar agora"
+                android:hint="Não tem conta? Criar agora!"
                 android:textColorHint="@color/black"
                 android:textSize="15dp"/>
 

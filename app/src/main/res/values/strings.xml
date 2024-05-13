@@ -3,4 +3,5 @@
     <string name="total_parcial">Total: R$ </string>
     <string name="avancar">Avançar</string>
     <string name="calcular">Calcular</string>
+    <string name="destino">Destino: </string>
 </resources>

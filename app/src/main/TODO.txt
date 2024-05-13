@@ -1,1 +1,4 @@
-//TODO: provavelmente vamos ter que adicionar o id do usuario junto com cada tela, pra quando for salvar no banco sabermos de quem é a simulação
+//TODO: corrigir versçao do banco e add id usuario na hospedagem
+//TODO: terminar manual da marca
+//TODO: fazer intents de redirecionamento de paǵina
+//TODO: colocar no shared preferences: nome do destino, id usuario, qtd de noites e qtd de pessoas

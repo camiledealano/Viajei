@@ -1,6 +1,8 @@
 package com.devmobile.viajei;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -26,27 +28,27 @@ public class HospedagemActivity extends AppCompatActivity {
         custoMedio = findViewById(R.id.custo_medio);
         qtdQuartos = findViewById(R.id.qtd_quartos);
         qtdPessoas = findViewById(R.id.qtd_pessoas);
-        qtdNoites = findViewById(R.id.qtd_noites);
+        qtdNoites  = findViewById(R.id.qtd_noites);
 
         HospedagemService hospedagemService = new HospedagemService();
 
         Button btnCalcular = findViewById(R.id.btnHospedagemCalcular);
-        Button btnAvancar = findViewById(R.id.btnHospedagemAvancar);
+        Button btnAvancar  = findViewById(R.id.btnHospedagemAvancar);
 
         btnCalcular.setOnClickListener(v -> {
             String custoMedioStr = custoMedio.getText().toString();
             String qtdQuartosStr = qtdQuartos.getText().toString();
             String qtdPessoasStr = qtdPessoas.getText().toString();
-            String qtdNoitesStr = qtdNoites.getText().toString();
+            String qtdNoitesStr  = qtdNoites.getText().toString();
 
             if (custoMedioStr.isEmpty() || qtdQuartosStr.isEmpty() || qtdPessoasStr.isEmpty() || qtdNoitesStr.isEmpty()) {
                 Toast.makeText(HospedagemActivity.this, "Por favor, preencha todos os campos", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            Double custoMedioValue = Double.valueOf(custoMedioStr);
+            Double custoMedioValue  = Double.valueOf(custoMedioStr);
             Integer qtdQuartosValue = Integer.valueOf(qtdQuartosStr);
-            Integer qtdNoitesValue = Integer.valueOf(qtdNoitesStr);
+            Integer qtdNoitesValue  = Integer.valueOf(qtdNoitesStr);
 
             String totalHospedagem = hospedagemService.calcularTotalHospedagem(custoMedioValue, qtdNoitesValue, qtdQuartosValue);
 
@@ -59,17 +61,17 @@ public class HospedagemActivity extends AppCompatActivity {
             String custoMedioStr = custoMedio.getText().toString();
             String qtdQuartosStr = qtdQuartos.getText().toString();
             String qtdPessoasStr = qtdPessoas.getText().toString();
-            String qtdNoitesStr = qtdNoites.getText().toString();
+            String qtdNoitesStr  = qtdNoites.getText().toString();
 
             if (custoMedioStr.isEmpty() || qtdQuartosStr.isEmpty() || qtdPessoasStr.isEmpty() || qtdNoitesStr.isEmpty()) {
                 Toast.makeText(HospedagemActivity.this, "Por favor, preencha todos os campos", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            Double custoMedioValue = Double.valueOf(custoMedioStr);
+            Double custoMedioValue  = Double.valueOf(custoMedioStr);
             Integer qtdQuartosValue = Integer.valueOf(qtdQuartosStr);
             Integer qtdPessoasValue = Integer.valueOf(qtdPessoasStr);
-            Integer qtdNoitesValue = Integer.valueOf(qtdNoitesStr);
+            Integer qtdNoitesValue  = Integer.valueOf(qtdNoitesStr);
 
             Double totalHospedagemValue = Double.valueOf(hospedagemService.calcularTotalHospedagem(custoMedioValue, qtdNoitesValue, qtdQuartosValue));
 
@@ -85,7 +87,15 @@ public class HospedagemActivity extends AppCompatActivity {
                 HospedagemDAO hospedagemDAO = new HospedagemDAO(HospedagemActivity.this);
                 hospedagemDAO.insert(hospedagemModel);
 
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(HospedagemActivity.this);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                editor.putInt("qtdPessoas", Integer.parseInt(qtdPessoasStr));
+                editor.putInt("qtdNoites", Integer.parseInt(qtdNoitesStr));
+                editor.apply();
+
                 //TODO: redirecionar pra proxima tela
+
             } catch (Exception e) {
                 Toast.makeText(HospedagemActivity.this, "Erro ao salvar hospedagem: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
