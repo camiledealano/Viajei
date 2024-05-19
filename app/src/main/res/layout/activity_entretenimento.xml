@@ -1,6 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/entretenimento"
+    android:background="@color/gray_background">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20sp"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="25dp"
+        android:layout_margin="17dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:text="Escolha suas opções de lazer!"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColorHint="@color/blue_primary" />
+
+        <TextView
+            android:id="@+id/nome_destino"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="@string/destino"
+            android:textColorHint="@color/blue_primary" />
+
+        <EditText
+            android:id="@+id/nome_entretenimento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Descrição do entretenimento" />
+
+        <EditText
+            android:id="@+id/valor_entretenimento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Valor"
+            android:inputType="numberDecimal"/>
+
+        <TextView
+            android:id="@+id/total_entretenimento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/total_parcial"
+            android:gravity="center"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:layout_margin="16dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_adicionar_entretenimento"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:text="Adicionar"
+                android:backgroundTint="@color/green_primary"
+                android:layout_marginEnd="15dp"/>
+
+            <Button
+                android:id="@+id/btn_entretenimento_avancar"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:text="@string/avancar"
+                android:backgroundTint="@color/green_secondary"/>
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/lista_entretenimentos"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clickable="false"/>
+
+    </LinearLayout>
+</ScrollView>

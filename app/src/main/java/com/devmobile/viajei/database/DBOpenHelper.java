@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 import com.devmobile.viajei.database.model.AlimentacaoModel;
+import com.devmobile.viajei.database.model.EntretenimentoModel;
 import com.devmobile.viajei.database.model.HospedagemModel;
 import com.devmobile.viajei.database.model.UsuarioModel;
 
@@ -24,6 +25,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         db.execSQL(UsuarioModel.CREATE_TABLE);
         db.execSQL(HospedagemModel.CREATE_TABLE);
         db.execSQL(AlimentacaoModel.CREATE_TABLE);
+        db.execSQL(EntretenimentoModel.CREATE_TABLE);
     }
 
     @Override
