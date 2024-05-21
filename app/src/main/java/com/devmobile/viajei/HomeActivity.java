@@ -40,6 +40,10 @@ public class HomeActivity extends AppCompatActivity {
         btnCriarDestino.setOnClickListener(v -> {
             String destino_destino = nomeDestino.getText().toString();
             if (!destino_destino.isEmpty()) {
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("destino", destino_destino);
+                editor.apply();
+
                 textViewDestino.setText(destino_destino);
                 layoutDestinoCriado.setVisibility(View.VISIBLE);
             } else {
