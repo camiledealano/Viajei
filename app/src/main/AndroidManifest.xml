@@ -16,7 +16,7 @@
         android:theme="@style/Theme.Viajei"
         tools:targetApi="31">
         <activity
-            android:name=".HospedagemActivity"
+            android:name=".HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,7 +26,7 @@
         </activity>
         <activity android:name=".LoginActivity"/>
         <activity android:name=".CriarUsuarioActivity"/>
-        <activity android:name=".HomeActivity"/>
+        <activity android:name=".HospedagemActivity"/>
         <activity android:name=".TransporteActivity"/>
         <activity android:name=".AlimentacaoActivity"/>
         <activity android:name=".EntretenimentoActivity"/>
