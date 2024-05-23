@@ -47,7 +47,6 @@ public class CriarUsuarioDAO extends AbstractDAO {
 
         try {
             open();
-            // select * from tb_usuario where usuario = ? and senha = ?
             Cursor cursor = db.query
                     (
                             UsuarioModel.TABELA_NOME,
@@ -75,6 +74,7 @@ public class CriarUsuarioDAO extends AbstractDAO {
         model.setId(cursor.getInt(0));
         model.setEmail(cursor.getString(2));
         model.setSenha(cursor.getString(3));
+        model.setNome(cursor.getString(1));
         return model;
     }
 }

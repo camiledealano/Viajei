@@ -13,11 +13,6 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import com.devmobile.viajei.database.dao.HomeDAO;
-import com.devmobile.viajei.database.model.HomeModel;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -28,14 +23,19 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         EditText nomeDestino = findViewById(R.id.nome_destino);
-        Button btnCriarDestino = findViewById(R.id.btn_criar_destino);
+        Button btnCriarDestino = findViewById(R.id.btn_pesquisar_destino);
         Button btnSimular = findViewById(R.id.btn_simular);
         LinearLayout layoutDestinoCriado = findViewById(R.id.layout_destino_criado);
         TextView textViewDestino = findViewById(R.id.textViewDestino);
 
         SharedPreferences sharedPreferences   = PreferenceManager.getDefaultSharedPreferences(HomeActivity.this);
-        String destino = sharedPreferences.getString("destino", "");
-        int idUsuario  = sharedPreferences.getInt("idUsuario", -1);
+        String usuario = sharedPreferences.getString("nomeUsuario", "");
+
+        TextView txtViewBoasVindas = findViewById(R.id.txt_boas_vindas);
+        String boasVindasStr = "Olá " + usuario + "! Para onde você vai hoje?";
+        txtViewBoasVindas.setText(boasVindasStr);
+
+       // int idUsuario  = sharedPreferences.getInt("idUsuario", -1);
 
         btnCriarDestino.setOnClickListener(v -> {
             String destino_destino = nomeDestino.getText().toString();

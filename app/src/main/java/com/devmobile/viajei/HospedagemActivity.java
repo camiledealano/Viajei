@@ -1,5 +1,6 @@
 package com.devmobile.viajei;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -102,7 +103,8 @@ public class HospedagemActivity extends AppCompatActivity {
                 editor.putInt("qtdNoites", Integer.parseInt(qtdNoitesStr));
                 editor.apply();
 
-                //TODO: redirecionar pra proxima tela
+                Intent intent = new Intent(HospedagemActivity.this, AlimentacaoActivity.class);
+                startActivity(intent);
 
             } catch (Exception e) {
                 Toast.makeText(HospedagemActivity.this, "Erro ao salvar hospedagem: " + e.getMessage(), Toast.LENGTH_SHORT).show();

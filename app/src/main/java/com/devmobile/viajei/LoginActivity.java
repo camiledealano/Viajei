@@ -1,7 +1,9 @@
 package com.devmobile.viajei;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -10,7 +12,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.devmobile.viajei.database.dao.CriarUsuarioDAO;
-import com.devmobile.viajei.database.dao.LoginDAO;
 import com.devmobile.viajei.database.model.UsuarioModel;
 
 public class LoginActivity extends AppCompatActivity {
@@ -58,7 +59,13 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        Toast.makeText(this, "Login realizado com sucesso", Toast.LENGTH_SHORT).show();
+        SharedPreferences sharedPreferences   = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
 
+        editor.putString("nomeUsuario", usuario.getNome());
+        editor.apply();
+
+        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+        startActivity(intent);
     }
 }

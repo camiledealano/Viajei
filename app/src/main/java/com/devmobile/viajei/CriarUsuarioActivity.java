@@ -1,5 +1,6 @@
 package com.devmobile.viajei;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,7 +53,9 @@ public class CriarUsuarioActivity extends AppCompatActivity {
                     criarUsuarioDAO.insert(usuarioModel);
 
                     Toast.makeText(CriarUsuarioActivity.this, "Usuário criado com sucesso!", Toast.LENGTH_SHORT).show();
-                    //TODO: redirecionar pra home
+
+                    Intent intent = new Intent(CriarUsuarioActivity.this, HomeActivity.class);
+                    startActivity(intent);
                 } catch (Exception e) {
                     Toast.makeText(CriarUsuarioActivity.this, "Erro ao inserir usuário: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
