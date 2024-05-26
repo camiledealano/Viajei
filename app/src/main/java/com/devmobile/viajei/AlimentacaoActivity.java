@@ -1,5 +1,6 @@
 package com.devmobile.viajei;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -85,7 +86,8 @@ public class AlimentacaoActivity extends AppCompatActivity {
                 AlimentacaoDAO alimentacaoDAO = new AlimentacaoDAO(AlimentacaoActivity.this);
                 alimentacaoDAO.insert(alimentacaoModel);
 
-                //TODO: redireciona pra próxima
+                Intent intent = new Intent(AlimentacaoActivity.this, TransporteActivity.class);
+                startActivity(intent);
             } catch (Exception e) {
                 Toast.makeText(AlimentacaoActivity.this, "Erro ao salvar alimentação: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }

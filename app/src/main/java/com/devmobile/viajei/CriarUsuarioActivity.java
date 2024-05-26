@@ -38,28 +38,37 @@ public class CriarUsuarioActivity extends AppCompatActivity {
             String telefoneText = telefone.getText().toString();
             String senhaText = senha.getText().toString();
 
-            if (nomeText.isEmpty() || emailText.isEmpty() || telefoneText.isEmpty() || senhaText.isEmpty()) {
+            if (nomeText.isEmpty() || (emailText.isEmpty()) || telefoneText.isEmpty() || senhaText.isEmpty()) {
                 Toast.makeText(CriarUsuarioActivity.this, "Por favor, preencha todos os campos", Toast.LENGTH_SHORT).show();
-            } else {
-                UsuarioModel usuarioModel = new UsuarioModel(
-                        nomeText,
-                        emailText,
-                        telefoneText,
-                        senhaText
-                );
+                return;
+            } else if (!isValidEmail(emailText)) {
+                Toast.makeText(CriarUsuarioActivity.this, "Por favor, insira um email válido", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-                try {
-                    criarUsuarioDAO = new CriarUsuarioDAO(CriarUsuarioActivity.this);
-                    criarUsuarioDAO.insert(usuarioModel);
+            UsuarioModel usuarioModel = new UsuarioModel(
+                    nomeText,
+                    emailText,
+                    telefoneText,
+                    senhaText
+            );
 
-                    Toast.makeText(CriarUsuarioActivity.this, "Usuário criado com sucesso!", Toast.LENGTH_SHORT).show();
+            try {
+                criarUsuarioDAO = new CriarUsuarioDAO(CriarUsuarioActivity.this);
+                criarUsuarioDAO.insert(usuarioModel);
 
-                    Intent intent = new Intent(CriarUsuarioActivity.this, HomeActivity.class);
-                    startActivity(intent);
-                } catch (Exception e) {
-                    Toast.makeText(CriarUsuarioActivity.this, "Erro ao inserir usuário: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(CriarUsuarioActivity.this, "Usuário criado com sucesso!", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(CriarUsuarioActivity.this, HomeActivity.class);
+                startActivity(intent);
+            } catch (Exception e) {
+                Toast.makeText(CriarUsuarioActivity.this, "Erro ao inserir usuário: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        return email.matches(emailRegex);
     }
 }

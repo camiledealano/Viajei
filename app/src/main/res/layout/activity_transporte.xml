@@ -1,44 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".TransporteActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="5dp"
-        android:background="@color/white"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="5dp">
-
-
-        <TextView
-            android:id="@+id/nome_destino"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="2dp"
-            android:text="Transporte - "
-            android:textColorHint="@color/blue_primary"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:layout_marginTop="30dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="5dp">
 
-        <TextView
-            android:id="@+id/qtd_pessoas_transporte"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="Para x pessoas"
-            android:textColorHint="@color/blue_primary" />
+
+            <TextView
+                android:id="@+id/nome_destino"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:textColorHint="@color/blue_primary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/qtd_pessoas_transporte"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:textColorHint="@color/blue_primary" />
         </LinearLayout>
 
         <androidx.cardview.widget.CardView
@@ -106,7 +103,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="2dp"
-                android:text="Viagem de automóvel:"
+                android:text="Organize sua viagem"
                 android:textStyle="bold"
                 android:textSize="20sp"
                 android:textColorHint="@color/blue_primary" />
@@ -115,7 +112,7 @@
                 android:id="@+id/checkBox_aluguel_carro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Carro Alugado"
+                android:text="Carro alugado"
                 android:checked="false"/>
 
             <LinearLayout
@@ -137,7 +134,7 @@
                     android:id="@+id/valor_aluguel_carro"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Valor aluguel"
+                    android:hint="Valor do aluguel?"
                     android:inputType="numberDecimal" />
 
             </LinearLayout>
@@ -158,7 +155,7 @@
                     android:id="@+id/km_total"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Quantos Km"
+                    android:hint="Quantos quilômetros?"
                     android:inputType="numberDecimal" />
 
             </LinearLayout>
@@ -180,7 +177,7 @@
                     android:id="@+id/km_litro"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Km por litro"
+                    android:hint="Quantos quilômetros por litro?"
                     android:inputType="numberDecimal" />
 
             </LinearLayout>
@@ -224,7 +221,7 @@
                     android:id="@+id/total_veiculos"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Total de veiculos"
+                    android:hint="Total de veículos"
                     android:inputType="number" />
 
             </LinearLayout>
@@ -267,7 +264,6 @@
                 android:orientation="vertical"
                 android:padding="10dp">
 
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -276,14 +272,6 @@
                     android:textColorHint="@color/blue_primary"
                     android:textSize="20sp"
                     android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/nomeino"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:text="@string/destino"
-                    android:textColorHint="@color/blue_primary" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -302,7 +290,7 @@
                         android:id="@+id/valor_passagem_avisao"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Valor passagem unitária"
+                        android:hint="Valor da passagem unitária"
                         android:inputType="numberDecimal" />
 
                 </LinearLayout>

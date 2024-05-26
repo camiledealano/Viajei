@@ -3,6 +3,7 @@ package com.devmobile.viajei;
 import static com.devmobile.viajei.extensios.Extensions.ParseDouble;
 import static com.devmobile.viajei.extensios.Extensions.ParseInt;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -21,7 +22,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
@@ -34,9 +34,9 @@ import com.devmobile.viajei.database.model.TransporteModel;
 
 public class TransporteActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,TextWatcher, CompoundButton.OnCheckedChangeListener {
 
-    Button btnAdicionar;
+    Button btnAdicionar, btnTransporteAvancar;
     EditText kmTotal, totalVeiculos, custoPorLitro, kmPorLitro, valorAluguelCarro, valorPassagemAerea;
-    TextView destinoTextView, totalCarroTransporteTextView;
+    TextView destinoTextView, totalCarroTransporteTextView, qtdPessoasTextView;
 
     int idUsuario,selectedTransport,qtdPessoas;
     long idNewAviaoTransporte = 0, idNewCarroTransporte = 0;
@@ -48,9 +48,9 @@ public class TransporteActivity extends AppCompatActivity implements AdapterView
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_transporte);
 
-        SetDestinoView();
-
         GetSharedPreferencesData();
+        SetDestinoView();
+        setQtdPessoasView();
         GetTransporteArrayData();
 
         CheckBox checkBoxAluguelCarro = findViewById(R.id.checkBox_aluguel_carro);
@@ -61,6 +61,7 @@ public class TransporteActivity extends AppCompatActivity implements AdapterView
         totalVeiculos = findViewById(R.id.total_veiculos);
         kmTotal = findViewById(R.id.km_total);
         btnAdicionar = findViewById(R.id.btn_transporte_adicionar);
+        btnTransporteAvancar = findViewById(R.id.btn_transporte_avancar);
 
         valorPassagemAerea.addTextChangedListener(this);
         valorAluguelCarro.addTextChangedListener(this);
@@ -71,15 +72,24 @@ public class TransporteActivity extends AppCompatActivity implements AdapterView
 
         btnAdicionar.setOnClickListener( x -> adicionar());
 
+        btnTransporteAvancar.setOnClickListener(v -> {
+            Intent intent = new Intent(TransporteActivity.this, EntretenimentoActivity.class);
+            startActivity(intent);
+        });
+
         checkBoxAluguelCarro.setOnCheckedChangeListener(this);
-
-
     }
 
     private void SetDestinoView() {
         destinoTextView = findViewById(R.id.nome_destino);
         String textoDestino = getString(R.string.destino) + " " + destino;
         destinoTextView.setText(textoDestino);
+    }
+
+    private void setQtdPessoasView() {
+        qtdPessoasTextView = findViewById(R.id.qtd_pessoas_transporte);
+        String textoQtdPessoas = "Para " + qtdPessoas + " pessoas.";
+        qtdPessoasTextView.setText(textoQtdPessoas);
     }
 
     private void GetTransporteArrayData() {
