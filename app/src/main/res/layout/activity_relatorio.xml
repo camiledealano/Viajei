@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/relatorio"
-    android:background="@color/gray_background">
+    android:background="@color/gray_background"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,62 +33,80 @@
                 android:textColorHint="@color/blue_primary" />
         </LinearLayout>
 
-        <LinearLayout
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@color/white"
-            android:padding="16dp"
-            android:layout_marginBottom="16dp"
-            android:layout_gravity="center">
+            app:cardElevation="10dp"
+            app:cardCornerRadius="20dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardMaxElevation="12dp"
+            app:cardPreventCornerOverlap="true"
+            android:layout_marginBottom="20dp">
 
-            <TextView
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Quantidade pessoa"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:layout_marginEnd="8dp"
-                android:textColor="@color/black" />
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="10dp">
 
-            <TextView
-                android:id="@+id/rel_qtd_pessoa"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1"
-                android:textSize="16sp"
-                android:textColor="@color/black" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Quantidade de pessoas:"
+                    android:layout_marginEnd="15dp"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="@color/black" />
 
-        </LinearLayout>
-        <LinearLayout
+                <TextView
+                    android:id="@+id/rel_qtd_pessoa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:layout_marginStart="1dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@color/white"
-            android:padding="16dp"
-            android:layout_marginBottom="16dp"
-            android:layout_gravity="center">
+            app:cardElevation="10dp"
+            app:cardCornerRadius="20dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardMaxElevation="12dp"
+            app:cardPreventCornerOverlap="true"
+            android:layout_marginBottom="20dp">
 
-            <TextView
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Quantidades de noite"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:layout_marginEnd="8dp"
-                android:textColor="@color/black" />
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="10dp">
 
-            <TextView
-                android:id="@+id/rel_qtd_noites"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textSize="16sp"
-                android:textColor="@color/black" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Quantidades de noites: "
+                    android:layout_marginEnd="15dp"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="@color/black" />
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/rel_qtd_noites"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="16sp"
+                    android:textColor="@color/black" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -103,7 +122,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Total Hospedagem"
+                android:text="Total da hospedagem"
                 android:textStyle="bold"
                 android:textSize="18sp"
                 android:layout_marginEnd="8dp"
@@ -133,7 +152,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Total Transporte"
+                android:text="Total do transporte"
                 android:textStyle="bold"
                 android:textSize="18sp"
                 android:layout_marginEnd="8dp"
@@ -163,7 +182,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Total Alimentação"
+                android:text="Total da alimentação"
                 android:textStyle="bold"
                 android:textSize="18sp"
                 android:layout_marginEnd="8dp"
@@ -193,7 +212,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="Total Entretenimento"
+                android:text="Total dos entretenimentos"
                 android:textStyle="bold"
                 android:textSize="18sp"
                 android:layout_marginEnd="8dp"
@@ -217,33 +236,8 @@
             android:background="@color/white"
             android:padding="16dp"
             android:layout_marginBottom="16dp"
-            android:layout_gravity="center">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Total viagem"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:layout_marginBottom="8dp"/>
-
-            <TextView
-                android:id="@+id/rel_total_viagem"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Valor: R$ 200,00"
-                android:textSize="16sp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@color/white"
-            android:padding="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:gravity="center">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -251,7 +245,7 @@
                 android:text="Total por pessoa"
                 android:textStyle="bold"
                 android:textSize="18sp"
-                android:layout_marginBottom="8dp"/>
+                android:layout_marginBottom="2dp"/>
 
             <TextView
                 android:id="@+id/rel_total_pessoa"
@@ -260,7 +254,21 @@
                 android:text="Valor: R$ 200,00"
                 android:textSize="16sp"/>
 
-        </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total final da viagem"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_marginTop="14dp"/>
 
+            <TextView
+                android:id="@+id/rel_total_viagem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Valor: R$ 200,00"
+                android:textSize="19sp"/>
+
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>
