@@ -1,7 +1,9 @@
 package com.devmobile.viajei;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -52,6 +54,12 @@ public class CriarUsuarioActivity extends AppCompatActivity {
                     telefoneText,
                     senhaText
             );
+
+            SharedPreferences sharedPreferences   = PreferenceManager.getDefaultSharedPreferences(CriarUsuarioActivity.this);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            editor.putString("nomeUsuario", usuarioModel.getNome());
+            editor.apply();
 
             try {
                 criarUsuarioDAO = new CriarUsuarioDAO(CriarUsuarioActivity.this);
