@@ -60,7 +60,7 @@ public class TransporteDAO extends AbstractDAO {
             open();
             Cursor cursor = db.query
                     (
-                            UsuarioModel.TABELA_NOME,
+                            TransporteModel.TABELA_NOME,
                             colunas,
                             TransporteModel.ID_USUARIO + " = ? ",
                             new String[]{idUsuarioString},

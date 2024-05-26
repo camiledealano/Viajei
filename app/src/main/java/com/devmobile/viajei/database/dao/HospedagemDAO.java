@@ -55,7 +55,7 @@ public class HospedagemDAO extends AbstractDAO {
             open();
             Cursor cursor = db.query
                     (
-                            UsuarioModel.TABELA_NOME,
+                            HospedagemModel.TABELA_NOME,
                             colunas,
                             HospedagemModel.ID_USUARIO + " = ? ",
                             new String[]{idUsuarioString},
