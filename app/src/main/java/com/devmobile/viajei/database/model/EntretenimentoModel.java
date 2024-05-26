@@ -23,13 +23,13 @@ public class EntretenimentoModel {
     public static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABELA_NOME;
 
     private int id;
-    private int idUsuario;
+    private long idUsuario;
     private String nomeLazer;
     private BigDecimal valor;
     private BigDecimal total;
 
     public EntretenimentoModel(){}
-    public EntretenimentoModel(int idUsuario, String nomeLazer, BigDecimal valor, BigDecimal total) {
+    public EntretenimentoModel(long idUsuario, String nomeLazer, BigDecimal valor, BigDecimal total) {
         this.idUsuario = idUsuario;
         this.nomeLazer = nomeLazer;
         this.valor = valor;
@@ -43,11 +43,11 @@ public class EntretenimentoModel {
         this.id = id;
     }
 
-    public int getIdUsuario() {
+    public long getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(int idUsuario) {
+    public void setIdUsuario(long idUsuario) {
         this.idUsuario = idUsuario;
     }
 

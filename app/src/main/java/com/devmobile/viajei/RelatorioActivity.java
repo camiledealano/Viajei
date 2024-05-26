@@ -34,7 +34,8 @@ public class RelatorioActivity extends AppCompatActivity {
 
     TextView totalPorPessoa, totalHospedagem, totalTransporte, totalAlimentacao,
             totalEntretenimento, totalViagem;
-    int idUsuario,qtdPessoas;
+    int qtdPessoas;
+    long idUsuario;
     String destino;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +121,7 @@ public class RelatorioActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(RelatorioActivity.this);
 
         destino = sharedPreferences.getString("destino", "");
-        idUsuario = sharedPreferences.getInt("idUsuario", -1);
+        idUsuario = sharedPreferences.getLong("idUsuario", -1);
         qtdPessoas = sharedPreferences.getInt("qtdPessoas", 1);
     }
 

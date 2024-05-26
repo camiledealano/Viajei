@@ -3,21 +3,10 @@ package com.devmobile.viajei.database.dao;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.widget.Toast;
 
-import androidx.room.Dao;
-import androidx.room.Delete;
-import androidx.room.Insert;
-import androidx.room.Query;
-
-import com.devmobile.viajei.CriarUsuarioActivity;
-import com.devmobile.viajei.TransporteActivity;
 import com.devmobile.viajei.database.DBOpenHelper;
 import com.devmobile.viajei.database.model.TransporteModel;
-import com.devmobile.viajei.database.model.UsuarioModel;
 import com.devmobile.viajei.database.utils.AbstractDAO;
-
-import java.util.List;
 
 public class TransporteDAO extends AbstractDAO {
     private TransporteModel transporteModel;
@@ -50,11 +39,11 @@ public class TransporteDAO extends AbstractDAO {
         }
     }
 
-    public TransporteModel findByIdUsuario(final int idUsuario) {
+    public TransporteModel findByIdUsuario(final long idUsuario) {
 
         TransporteModel model = null;
 
-        String idUsuarioString = Integer.toString(idUsuario);
+        String idUsuarioString = Long.toString(idUsuario);
 
         try {
             open();

@@ -5,22 +5,28 @@ public class HomeModel {
     public static final String TABELA_NOME = "tb_nome_destino";
 
     public static final String ID = "_id";
-
+    public static final String ID_USUARIO = "id_usuario";
     public static final String NOME_DESTINO = "nome_destino";
-
 
     public static final String CREATE_TABLE = "CREATE TABLE " + TABELA_NOME +
             "( "
             + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + NOME_DESTINO + " TEXT NOT NULL, " +
+            + ID_USUARIO + " NUMERIC NOT NULL, "
+            + NOME_DESTINO + " TEXT NOT NULL" +
             ");";
 
-    private int id;
-    private String nome_destino;
+    public static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABELA_NOME;
 
-    public HomeModel(String nome_destino) {
-        this.nome_destino = nome_destino;
+    private int id;
+    private String nomeDestino;
+    private long idUsuario;
+
+    public HomeModel(String nomeDestino, long idUsuario) {
+        this.nomeDestino = nomeDestino;
+        this.idUsuario = idUsuario;
     }
+
+    public HomeModel(){}
 
     public int getId() {
         return id;
@@ -31,11 +37,19 @@ public class HomeModel {
     }
 
     public String getNomeDestino() {
-        return nome_destino;
+        return nomeDestino;
     }
 
-    public void setNomeDestino(String nome_destino) {
-        this.nome_destino = nome_destino;
+    public void setNomeDestino(String nomeDestino) {
+        this.nomeDestino = nomeDestino;
+    }
+
+    public long getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(long idUsuario) {
+        this.idUsuario = idUsuario;
     }
 }
 

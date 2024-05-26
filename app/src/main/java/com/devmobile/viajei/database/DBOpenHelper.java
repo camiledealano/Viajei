@@ -10,6 +10,7 @@ import com.devmobile.viajei.database.model.AlimentacaoModel;
 import com.devmobile.viajei.database.model.AviaoTransporteModel;
 import com.devmobile.viajei.database.model.CarroTransporteModel;
 import com.devmobile.viajei.database.model.EntretenimentoModel;
+import com.devmobile.viajei.database.model.HomeModel;
 import com.devmobile.viajei.database.model.HospedagemModel;
 import com.devmobile.viajei.database.model.TransporteModel;
 import com.devmobile.viajei.database.model.UsuarioModel;
@@ -17,7 +18,7 @@ import com.devmobile.viajei.database.model.UsuarioModel;
 public class DBOpenHelper extends SQLiteOpenHelper {
 
     private static final String NOME_BANCO = "viajei.db";
-    private static final int VERSAO_BANCO = 7;
+    private static final int VERSAO_BANCO = 8;
 
     public DBOpenHelper(@Nullable Context context) {
         super(context, NOME_BANCO, null, VERSAO_BANCO);
@@ -32,6 +33,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         db.execSQL(TransporteModel.CREATE_TABLE);
         db.execSQL(AviaoTransporteModel.CREATE_TABLE);
         db.execSQL(CarroTransporteModel.CREATE_TABLE);
+        db.execSQL(HomeModel.CREATE_TABLE);
     }
 
     @Override
@@ -43,6 +45,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         db.execSQL(TransporteModel.DROP_TABLE);
         db.execSQL(AviaoTransporteModel.DROP_TABLE);
         db.execSQL(CarroTransporteModel.DROP_TABLE);
+        db.execSQL(HomeModel.DROP_TABLE);
 
         onCreate(db);
     }

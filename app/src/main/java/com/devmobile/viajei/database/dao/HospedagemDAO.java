@@ -45,11 +45,11 @@ public class HospedagemDAO extends AbstractDAO {
         }
     }
 
-    public HospedagemModel FindByIdUsuario(final int idUsuario) {
+    public HospedagemModel FindByIdUsuario(final long idUsuario) {
 
         HospedagemModel model = null;
 
-        String idUsuarioString = Integer.toString(idUsuario);
+        String idUsuarioString = Long.toString(idUsuario);
 
         try {
             open();

@@ -44,11 +44,11 @@ public class EntretenimentoDAO extends AbstractDAO {
         }
     }
 
-    public List<EntretenimentoModel> findByIdUsuario(final int idUsuario) {
+    public List<EntretenimentoModel> findByIdUsuario(final long idUsuario) {
 
         List<EntretenimentoModel> modelList = new ArrayList<>();
 
-        String idUsuarioString = Integer.toString(idUsuario);
+        String idUsuarioString = Long.toString(idUsuario);
 
         try {
             open();

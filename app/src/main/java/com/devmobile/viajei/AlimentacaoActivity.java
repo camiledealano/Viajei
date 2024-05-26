@@ -35,7 +35,7 @@ public class AlimentacaoActivity extends AppCompatActivity {
 
         int qtdPessoas = sharedPreferences.getInt("qtdPessoas", 0);
         int diasViagem = sharedPreferences.getInt("qtdNoites", 0);
-        int idUsuario  = sharedPreferences.getInt("idUsuario", -1);
+        long idUsuario  = sharedPreferences.getLong("idUsuario", -1);
         String destino = sharedPreferences.getString("destino", "");
 
         TextView destinoTextView = findViewById(R.id.nome_destino);

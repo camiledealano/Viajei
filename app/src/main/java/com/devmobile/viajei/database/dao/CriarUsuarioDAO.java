@@ -25,7 +25,8 @@ public class CriarUsuarioDAO extends AbstractDAO {
             UsuarioModel.SENHA
     };
 
-    public void insert(UsuarioModel usuarioModel) {
+    public long insert(UsuarioModel usuarioModel) {
+        long idCriado;
         try {
             open();
 
@@ -35,10 +36,12 @@ public class CriarUsuarioDAO extends AbstractDAO {
             values.put(UsuarioModel.TELEFONE, usuarioModel.getTelefone());
             values.put(UsuarioModel.SENHA, usuarioModel.getSenha());
 
-            db.insert(UsuarioModel.TABELA_NOME, null, values);
+            idCriado = db.insert(UsuarioModel.TABELA_NOME, null, values);
         } finally {
             close();
         }
+
+        return idCriado;
     }
 
     public UsuarioModel Select(final String email, final String senha) {

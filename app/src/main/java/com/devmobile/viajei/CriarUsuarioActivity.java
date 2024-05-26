@@ -63,7 +63,10 @@ public class CriarUsuarioActivity extends AppCompatActivity {
 
             try {
                 criarUsuarioDAO = new CriarUsuarioDAO(CriarUsuarioActivity.this);
-                criarUsuarioDAO.insert(usuarioModel);
+                long idUsuario =  criarUsuarioDAO.insert(usuarioModel);
+
+                editor.putLong("idUsuario", idUsuario);
+                editor.apply();
 
                 Toast.makeText(CriarUsuarioActivity.this, "Usuário criado com sucesso!", Toast.LENGTH_SHORT).show();
 

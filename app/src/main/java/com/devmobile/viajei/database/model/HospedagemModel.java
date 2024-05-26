@@ -27,19 +27,18 @@ public class HospedagemModel {
 
 
     private int id;
-    private Integer idUsuario;
+    private long idUsuario;
     private Double custoMedio;
     private Integer qtdQuartos;
     private Integer qtdPessoas;
     private Integer qtdNoites;
     private Double total;
 
-
     public HospedagemModel()
     {
 
     }
-    public HospedagemModel(Integer idUsuario, Double custoMedio, Integer qtdQuartos, Integer qtdPessoas, Integer qtdNoites, Double total) {
+    public HospedagemModel(long idUsuario, Double custoMedio, Integer qtdQuartos, Integer qtdPessoas, Integer qtdNoites, Double total) {
         this.idUsuario = idUsuario;
         this.custoMedio = custoMedio;
         this.qtdQuartos = qtdQuartos;
@@ -52,11 +51,11 @@ public class HospedagemModel {
         return id;
     }
 
-    public Integer getIdUsuario() {
+    public long getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(Integer idUsuario) {
+    public void setIdUsuario(long idUsuario) {
         this.idUsuario = idUsuario;
     }
 

@@ -21,14 +21,14 @@ public class TransporteModel {
     private int id;
     private long idAviaoTransporte;
     private long idCarroTransporte;
-    private int idUsuario;
+    private long idUsuario;
 
     public TransporteModel()
     {
 
     }
 
-    public TransporteModel(long idAviaoTransporte, long idCarroTransporte, int idUsuario) {
+    public TransporteModel(long idAviaoTransporte, long idCarroTransporte, long idUsuario) {
         this.idAviaoTransporte = idAviaoTransporte;
         this.idCarroTransporte = idCarroTransporte;
         this.idUsuario = idUsuario;
@@ -58,11 +58,11 @@ public class TransporteModel {
         this.id = id;
     }
 
-    public int getIdUsuario() {
+    public long getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(int idUsuario) {
+    public void setIdUsuario(long idUsuario) {
         this.idUsuario = idUsuario;
     }
 }

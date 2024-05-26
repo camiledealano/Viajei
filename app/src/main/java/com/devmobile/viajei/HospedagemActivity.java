@@ -38,7 +38,7 @@ public class HospedagemActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences   = PreferenceManager.getDefaultSharedPreferences(HospedagemActivity.this);
         String destino = sharedPreferences.getString("destino", "");
-        int idUsuario  = sharedPreferences.getInt("idUsuario", -1);
+        long idUsuario  = sharedPreferences.getLong("idUsuario", -1);
 
         TextView destinoTextView = findViewById(R.id.nome_destino);
         String textoDestino = getString(R.string.destino) + " " + destino;

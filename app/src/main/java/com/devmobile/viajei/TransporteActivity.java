@@ -40,7 +40,8 @@ public class TransporteActivity extends AppCompatActivity implements AdapterView
     EditText kmTotal, totalVeiculos, custoPorLitro, kmPorLitro, valorAluguelCarro, valorPassagemAerea;
     TextView destinoTextView, totalCarroTransporteTextView;
 
-    int idUsuario,selectedTransport,qtdPessoas;
+    int selectedTransport,qtdPessoas;
+    long idUsuario;
     long idNewAviaoTransporte = 0, idNewCarroTransporte = 0;
     String destino;
 
@@ -104,7 +105,7 @@ public class TransporteActivity extends AppCompatActivity implements AdapterView
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(TransporteActivity.this);
 
         destino = sharedPreferences.getString("destino", "");
-        idUsuario = sharedPreferences.getInt("idUsuario", -1);
+        idUsuario = sharedPreferences.getLong("idUsuario", -1);
         qtdPessoas = sharedPreferences.getInt("qtdPessoas", 1);
     }
 

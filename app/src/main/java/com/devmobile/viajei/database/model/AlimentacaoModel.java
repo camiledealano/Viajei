@@ -22,13 +22,13 @@ public class AlimentacaoModel {
 
 
     private int id;
-    private int idUsuario;
+    private long idUsuario;
     private Double custoMedio;
     private Integer qtdRefeicoes;
     private Double total;
 
     public AlimentacaoModel(){}
-    public AlimentacaoModel(int idUsuario, Double custoMedio, Integer qtdRefeicoes, Double total) {
+    public AlimentacaoModel(long idUsuario, Double custoMedio, Integer qtdRefeicoes, Double total) {
         this.idUsuario = idUsuario;
         this.custoMedio = custoMedio;
         this.qtdRefeicoes = qtdRefeicoes;
@@ -43,11 +43,11 @@ public class AlimentacaoModel {
         this.id = id;
     }
 
-    public int getIdUsuario() {
+    public long getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(int idUsuario) {
+    public void setIdUsuario(long idUsuario) {
         this.idUsuario = idUsuario;
     }
 
