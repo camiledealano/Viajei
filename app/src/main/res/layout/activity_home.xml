@@ -102,12 +102,12 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/container_cards"
+        <ListView
+            android:id="@+id/lista_destinos"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-        </LinearLayout>
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clickable="false"/>
 
     </LinearLayout>
 </ScrollView>

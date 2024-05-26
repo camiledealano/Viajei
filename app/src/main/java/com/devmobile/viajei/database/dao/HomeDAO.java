@@ -36,13 +36,12 @@ public class HomeDAO extends AbstractDAO {
         }
     }
 
-    public List<HomeModel> findSimulacoesById(final long idUsuario) {
+    public List<HomeModel> findByIdUsuario(final long idUsuario) {
         HomeModel model;
         List<HomeModel> destinosSimulados = new ArrayList<>();
 
         try {
             open();
-            //pau na query
             Cursor cursor = db.query
                     (
                             HomeModel.TABELA_NOME,
@@ -56,7 +55,7 @@ public class HomeDAO extends AbstractDAO {
             while (!cursor.isAfterLast()) {
                 model = cursorToStructure(cursor);
                 destinosSimulados.add(model);
-                break;
+                cursor.moveToNext();
             }
         }
         finally {
@@ -69,8 +68,9 @@ public class HomeDAO extends AbstractDAO {
     public final HomeModel cursorToStructure(Cursor cursor) {
         HomeModel model = new HomeModel();
         model.setId(cursor.getInt(0));
+        model.setNomeDestino(cursor.getString(1));
+        int teste = cursor.getInt(2);
         model.setIdUsuario(cursor.getInt(2));
-        model.setNomeDestino(cursor.getString(3));
         return model;
     }
 }
