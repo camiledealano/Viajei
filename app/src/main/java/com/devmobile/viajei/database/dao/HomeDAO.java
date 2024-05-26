@@ -69,7 +69,6 @@ public class HomeDAO extends AbstractDAO {
         HomeModel model = new HomeModel();
         model.setId(cursor.getInt(0));
         model.setNomeDestino(cursor.getString(1));
-        int teste = cursor.getInt(2);
         model.setIdUsuario(cursor.getInt(2));
         return model;
     }
