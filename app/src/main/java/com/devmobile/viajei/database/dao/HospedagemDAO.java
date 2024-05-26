@@ -32,12 +32,13 @@ public class HospedagemDAO extends AbstractDAO {
             open();
 
             ContentValues values = new ContentValues();
-            values.put(HospedagemModel.ID_USUARIO, hospedagemModel.getIdUsuario());
+            values.put(HospedagemModel.ID, hospedagemModel.getIdUsuario());
             values.put(HospedagemModel.CUSTO_MEDIO, hospedagemModel.getCustoMedio());
             values.put(HospedagemModel.QTD_QUARTOS, hospedagemModel.getQtdQuartos());
             values.put(HospedagemModel.QTD_PESSOAS, hospedagemModel.getQtdPessoas());
             values.put(HospedagemModel.QTD_NOITES, hospedagemModel.getQtdNoites());
             values.put(HospedagemModel.TOTAL, hospedagemModel.getTotal());
+            values.put(HospedagemModel.ID_USUARIO, hospedagemModel.getIdUsuario());
 
             db.insert(HospedagemModel.TABELA_NOME, null, values);
         } finally {
@@ -81,8 +82,9 @@ public class HospedagemDAO extends AbstractDAO {
         model.setCustoMedio(cursor.getDouble(1));
         model.setQtdQuartos(cursor.getInt(2));
         model.setQtdPessoas(cursor.getInt(3));
-        model.setQtdNoites(cursor.getInt(3));
-        model.setIdUsuario(cursor.getInt(3));
+        model.setQtdNoites(cursor.getInt(4));
+        model.setTotal(cursor.getDouble(5));
+        model.setIdUsuario(cursor.getInt(6));
 
         return model;
     }
