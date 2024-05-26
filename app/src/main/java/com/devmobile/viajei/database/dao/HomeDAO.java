@@ -36,10 +36,8 @@ public class HomeDAO extends AbstractDAO {
         }
     }
 
-    public List<HomeModel> findByIdUsuario(final long idUsuario) {
-        HomeModel model;
-        List<HomeModel> destinosSimulados = new ArrayList<>();
-
+    public HomeModel findByIdUsuario(final long idUsuario) {
+        HomeModel model = null;
         try {
             open();
             Cursor cursor = db.query
@@ -50,11 +48,10 @@ public class HomeDAO extends AbstractDAO {
                             new String[]{String.valueOf(idUsuario)},
                             null,
                             null,
-                            null);
+                            "_id desc");
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
                 model = cursorToStructure(cursor);
-                destinosSimulados.add(model);
                 cursor.moveToNext();
             }
         }
@@ -62,7 +59,7 @@ public class HomeDAO extends AbstractDAO {
             close();
         }
 
-        return destinosSimulados;
+        return model;
     }
 
     public final HomeModel cursorToStructure(Cursor cursor) {

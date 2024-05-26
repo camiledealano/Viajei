@@ -24,7 +24,6 @@ public class TransporteDAO extends AbstractDAO {
     };
 
     public void insert(TransporteModel transporteModel) {
-        int newRow = -1;
         try {
             open();
 

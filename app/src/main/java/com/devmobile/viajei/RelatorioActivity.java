@@ -70,7 +70,7 @@ public class RelatorioActivity extends AppCompatActivity {
     private void SetTextEditView() {
         qtdPessoa.setText(Integer.toString(qtdPessoas));
         qtdNoite.setText(Integer.toString(qtdNoites));
-        relNomeDestino.setText("Relatório - " + destino);
+        relNomeDestino.setText("Relatório de custos para: " + destino);
     }
 
     private void calcularTotal(double totalHospedagem, double totalTransporte, double totalAlimentacao, double totalEntretenimento) {

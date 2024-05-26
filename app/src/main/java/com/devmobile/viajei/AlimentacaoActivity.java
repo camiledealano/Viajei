@@ -73,6 +73,7 @@ public class AlimentacaoActivity extends AppCompatActivity {
             Double custoMedioAlimentacaoValue  = Double.valueOf(custoMedioAlimentacaoStr);
             Integer qtdRefeicoesValue          = Integer.valueOf(qtdRefeicoesStr);
 
+            //ta dando pau de valor aqui
             Double totalAlimentacao = Double.valueOf(alimentacaoService.calcularAlimentacao(custoMedioAlimentacaoValue, qtdRefeicoesValue, qtdPessoas, diasViagem));
 
             AlimentacaoModel alimentacaoModel = new AlimentacaoModel(

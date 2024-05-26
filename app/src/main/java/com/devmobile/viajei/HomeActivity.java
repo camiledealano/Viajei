@@ -15,10 +15,9 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.devmobile.viajei.adapter.EntretenimentoAdapter;
-import com.devmobile.viajei.adapter.HomeAdapter;
 import com.devmobile.viajei.database.dao.HomeDAO;
 import com.devmobile.viajei.database.model.HomeModel;
+import com.devmobile.viajei.database.model.HospedagemModel;
 
 import java.util.List;
 
@@ -33,20 +32,19 @@ public class HomeActivity extends AppCompatActivity {
         EditText nomeDestino = findViewById(R.id.nome_destino);
         Button btnCriarDestino = findViewById(R.id.btn_pesquisar_destino);
         Button btnSimular = findViewById(R.id.btn_simular);
+        Button btnVisualizar = findViewById(R.id.btn_visualizar_relatorio);
         LinearLayout layoutDestinoCriado = findViewById(R.id.layout_destino_criado);
         TextView textViewDestino = findViewById(R.id.textViewDestino);
-        ListView listaDestinos = findViewById(R.id.lista_destinos);
 
         SharedPreferences sharedPreferences   = PreferenceManager.getDefaultSharedPreferences(HomeActivity.this);
         String usuario = sharedPreferences.getString("nomeUsuario", "");
-        int idUsuario = sharedPreferences.getInt("idUsuario", 1);
+        long idUsuario = sharedPreferences.getLong("idUsuario", -1);
 
         TextView txtViewBoasVindas = findViewById(R.id.txt_boas_vindas);
         String boasVindasStr = "Olá " + usuario + "! Para onde você vai hoje?";
         txtViewBoasVindas.setText(boasVindasStr);
 
-        SetListaDestinos(idUsuario, listaDestinos);
-
+        buscaSimulacao(idUsuario);
 
         btnCriarDestino.setOnClickListener(v -> {
             String destino_destino = nomeDestino.getText().toString();
@@ -67,17 +65,23 @@ public class HomeActivity extends AppCompatActivity {
             Intent intent = new Intent(HomeActivity.this, HospedagemActivity.class);
             startActivity(intent);
         });
+
+        btnVisualizar.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, RelatorioActivity.class);
+            startActivity(intent);
+        });
     }
 
-    private void SetListaDestinos(int idUsuario, ListView listaDestinos) {
+    private void buscaSimulacao(long idUsuario) {
         HomeDAO homeDAO = new HomeDAO(HomeActivity.this);
+        HomeModel model = homeDAO.findByIdUsuario(idUsuario);
 
-        List<HomeModel> homeModelList = homeDAO.findByIdUsuario(idUsuario);
+        if (model != null) {
+            LinearLayout layoutSimulacao = findViewById(R.id.container_simulacao);
+            TextView nomeDestinoCriadoTextView = findViewById(R.id.nome_destino_criado);
+            nomeDestinoCriadoTextView.setText(model.getNomeDestino());
 
-        HomeAdapter adapter = new HomeAdapter(HomeActivity.this);
-        adapter.setItens(homeModelList);
-
-        listaDestinos.setAdapter(adapter);
+            layoutSimulacao.setVisibility(View.VISIBLE);
+        }
     }
-
 }

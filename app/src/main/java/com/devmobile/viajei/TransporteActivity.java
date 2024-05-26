@@ -45,16 +45,18 @@ public class TransporteActivity extends AppCompatActivity implements AdapterView
     long idNewAviaoTransporte = 0, idNewCarroTransporte = 0;
     String destino;
 
+    boolean adicionouTransporte = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_transporte);
 
-        setDestinoView();
-
         getSharedPreferencesData();
         getTransporteArrayData();
+
+        setDestinoView();
 
         CheckBox checkBoxAluguelCarro = findViewById(R.id.checkBox_aluguel_carro);
         valorPassagemAerea = findViewById(R.id.valor_passagem_avisao);
@@ -76,6 +78,11 @@ public class TransporteActivity extends AppCompatActivity implements AdapterView
         btnAdicionar.setOnClickListener( x -> adicionar());
 
         btnAvancar.setOnClickListener(x -> {
+            if (!adicionouTransporte) {
+                Toast.makeText(TransporteActivity.this, "Por favor adicione um meio de transporte!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             Intent intent = new Intent(TransporteActivity.this, EntretenimentoActivity.class);
             startActivity(intent);
         });
@@ -113,19 +120,28 @@ public class TransporteActivity extends AppCompatActivity implements AdapterView
         switch (selectedTransport){
             case 0:
                 insertAviaoTransporte();
+                insertTransporte();
+                adicionouTransporte = true;
                 break;
             case 1:
                 insertCarroTransporte();
+                insertTransporte();
+                adicionouTransporte = true;
                 break;
         }
-
-        insertTransporte();
-
     }
 
     private void insertAviaoTransporte() {
+        EditText valorPassagemEditText = findViewById(R.id.valor_passagem_avisao);
+        String valorPassagemStr = valorPassagemEditText.getText().toString();
+
+        if (valorPassagemStr.isEmpty()) {
+            Toast.makeText(TransporteActivity.this, "Por favor insera o valor!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         AviaoTransporteModel aviaoTransporteModel = new AviaoTransporteModel(
-                parseDouble(valorPassagemAerea.getText().toString())
+                parseDouble(valorPassagemStr)
         );
 
         try {
