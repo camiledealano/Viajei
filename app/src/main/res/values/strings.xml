@@ -4,4 +4,10 @@
     <string name="avancar">Avançar</string>
     <string name="calcular">Calcular</string>
     <string name="destino">Destino: </string>
+    <string name="adicionar">Adicionar </string>
+    <string name="transporte_prompt">Escolha o transporte:</string>
+    <string-array name="transporte_array">
+        <item>Avião</item>
+        <item>Carro</item>
+    </string-array>
 </resources>

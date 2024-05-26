@@ -1,6 +1,7 @@
 package com.devmobile.viajei.database.utils;
 
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.devmobile.viajei.database.DBOpenHelper;
 

@@ -20,6 +20,7 @@ public class EntretenimentoModel {
             + TOTAL+ " NUMERIC NOT NULL " +
             ");";
 
+    public static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABELA_NOME;
 
     private int id;
     private int idUsuario;
