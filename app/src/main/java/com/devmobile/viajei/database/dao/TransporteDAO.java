@@ -83,8 +83,8 @@ public class TransporteDAO extends AbstractDAO {
     public final TransporteModel cursorToStructure(Cursor cursor) {
         TransporteModel model = new TransporteModel();
         model.setId(cursor.getInt(0));
-        model.setIdAviaoTransporte(cursor.getInt(1));
-        model.setIdCarroTransporte(cursor.getInt(2));
+        model.setIdCarroTransporte(cursor.getInt(1));
+        model.setIdAviaoTransporte(cursor.getInt(2));
         model.setIdUsuario(cursor.getInt(3));
         return model;
     }

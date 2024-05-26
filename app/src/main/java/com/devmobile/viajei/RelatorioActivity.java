@@ -33,8 +33,8 @@ import java.util.List;
 public class RelatorioActivity extends AppCompatActivity {
 
     TextView totalPorPessoa, totalHospedagem, totalTransporte, totalAlimentacao,
-            totalEntretenimento, totalViagem;
-    int idUsuario,qtdPessoas;
+            totalEntretenimento, totalViagem, qtdPessoa, qtdNoite, relNomeDestino;
+    int idUsuario,qtdPessoas, qtdNoites;
     String destino;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +50,11 @@ public class RelatorioActivity extends AppCompatActivity {
         totalAlimentacao = findViewById(R.id.rel_total_alimentacao);
         totalEntretenimento = findViewById(R.id.rel_total_entretenimento);
         totalViagem = findViewById(R.id.rel_total_viagem);
+        qtdPessoa = findViewById(R.id.rel_qtd_pessoa);
+        qtdNoite = findViewById(R.id.rel_qtd_noites);
+        relNomeDestino = findViewById(R.id.rel_nome_destino);
+
+        SetTextEditView();
 
         double totalHospedagem = calcularHospedagem();
         double totalTransporte = calcularTransporte();
@@ -61,15 +66,21 @@ public class RelatorioActivity extends AppCompatActivity {
 
     }
 
+    private void SetTextEditView() {
+        qtdPessoa.setText(Integer.toString(qtdPessoas));
+        qtdNoite.setText(Integer.toString(qtdNoites));
+        relNomeDestino.setText("Relatório - " + destino);
+    }
+
     private void calcularTotal(double totalHospedagem, double totalTransporte, double totalAlimentacao, double totalEntretenimento) {
         double total =  (totalHospedagem + totalTransporte + totalAlimentacao + totalEntretenimento);
-        totalViagem.setText(formatToBRL(Double.toString(total)));
+        totalViagem.setText(formatToBRL(total));
     }
 
     private void calcularTotalPorPessoa(double totalHospedagem, double totalTransporte, double totalAlimentacao, double totalEntretenimento) {
         double total =  (totalHospedagem + totalTransporte + totalAlimentacao + totalEntretenimento) / qtdPessoas;
 
-        totalPorPessoa.setText(formatToBRL(Double.toString(total)));
+        totalPorPessoa.setText(formatToBRL(total));
     }
 
     private double calcularTotalEntretenimento() {
@@ -80,7 +91,7 @@ public class RelatorioActivity extends AppCompatActivity {
                                                   .map(EntretenimentoModel::getTotal)
                                                   .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        totalAlimentacao.setText(formatToBRL(total.toString()));
+        totalAlimentacao.setText(formatToBRL(total.doubleValue()));
 
         return total.doubleValue();
     }
@@ -89,7 +100,7 @@ public class RelatorioActivity extends AppCompatActivity {
         AlimentacaoModel AlimentacaoModel = alimentacaoDAO.FindByIdUsuario(idUsuario);
 
         double total =  AlimentacaoModel.getTotal();
-        totalAlimentacao.setText(formatToBRL(Double.toString(total)));
+        totalAlimentacao.setText(formatToBRL(total));
 
         return total;
     }
@@ -102,8 +113,16 @@ public class RelatorioActivity extends AppCompatActivity {
         CarroTransporteModel carroTransporteModel = carroTransporteDAO.findById(transporteModel.getIdCarroTransporte());
         AviaoTransporteModel aviaoTransporteModel = aviaoTransporteDAO.findById(transporteModel.getIdAviaoTransporte());
 
-        double total = carroTransporteModel.getTotal() + aviaoTransporteModel.getValorPassagem();
-        totalHospedagem.setText(formatToBRL(Double.toString(total)));
+        double total = 0;
+        if(carroTransporteModel != null){
+            total = carroTransporteModel.getTotal();
+        }
+
+        if(aviaoTransporteModel != null){
+            total+= aviaoTransporteModel.getValorPassagem();
+        }
+
+        totalHospedagem.setText(formatToBRL(total));
 
         return total;
     }
@@ -111,8 +130,8 @@ public class RelatorioActivity extends AppCompatActivity {
         HospedagemDAO hospedagemDAO = new HospedagemDAO(RelatorioActivity.this);
         HospedagemModel hospedagemModel = hospedagemDAO.FindByIdUsuario(idUsuario);
 
-        double total =  hospedagemModel.getTotal();
-        totalHospedagem.setText(formatToBRL(Double.toString(total)));
+        double total = hospedagemModel.getTotal();
+        totalHospedagem.setText(formatToBRL(total));
 
         return  total;
     }
@@ -122,6 +141,7 @@ public class RelatorioActivity extends AppCompatActivity {
         destino = sharedPreferences.getString("destino", "");
         idUsuario = sharedPreferences.getInt("idUsuario", -1);
         qtdPessoas = sharedPreferences.getInt("qtdPessoas", 1);
+        qtdNoites = sharedPreferences.getInt("qtdNoites", 0);
     }
 
 

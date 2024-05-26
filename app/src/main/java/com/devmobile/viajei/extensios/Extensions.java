@@ -23,7 +23,7 @@ public class Extensions {
         else return 0;
     }
 
-    public static String formatToBRL(String value){
+    public static String formatToBRL(double value){
         return String.format("R$ %.2f", value);
     }
 }
