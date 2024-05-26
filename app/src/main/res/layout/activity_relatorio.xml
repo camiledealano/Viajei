@@ -1,6 +1,269 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/relatorio"
+    android:background="@color/gray_background">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:background="@drawable/rounded_corner"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:text="Total - Destino"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColorHint="@color/blue_primary" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/white"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="center">
+
+            <!-- Título do relatório -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Quantidade pessoa"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginEnd="8dp"
+                android:textColor="@color/black" />
+
+            <!-- Valor do relatório -->
+            <TextView
+                android:id="@+id/rel_qtd_pessoa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="R$ 100,00"
+                android:textSize="16sp"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/white"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="center">
+
+            <!-- Título do relatório -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Quantidades de noite"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginEnd="8dp"
+                android:textColor="@color/black" />
+
+            <!-- Valor do relatório -->
+            <TextView
+                android:id="@+id/rel_qtd_noites"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="R$ 100,00"
+                android:textSize="16sp"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/white"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="center">
+
+            <!-- Título do relatório -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Total Hospedagem"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginEnd="8dp"
+                android:textColor="@color/black" />
+
+            <!-- Valor do relatório -->
+            <TextView
+                android:id="@+id/rel_total_hospedagem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="R$ 100,00"
+                android:textSize="16sp"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/white"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="center">
+
+            <!-- Título do relatório -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Total Transporte"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginEnd="8dp"
+                android:textColor="@color/black" />
+
+            <!-- Valor do relatório -->
+            <TextView
+                android:id="@+id/rel_total_transporte"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="R$ 100,00"
+                android:textSize="16sp"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/white"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="center">
+
+            <!-- Título do relatório -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Total Alimentação"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginEnd="8dp"
+                android:textColor="@color/black" />
+
+            <!-- Valor do relatório -->
+            <TextView
+                android:id="@+id/rel_total_alimentacao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="R$ 100,00"
+                android:textSize="16sp"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/white"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="center">
+
+            <!-- Título do relatório -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Total Entretenimento"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginEnd="8dp"
+                android:textColor="@color/black" />
+
+            <!-- Valor do relatório -->
+            <TextView
+                android:id="@+id/rel_total_entretenimento"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="R$ 100,00"
+                android:textSize="16sp"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total viagem"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:id="@+id/rel_total_viagem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Valor: R$ 200,00"
+                android:textSize="16sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:padding="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total por pessoa"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:id="@+id/rel_total_pessoa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Valor: R$ 200,00"
+                android:textSize="16sp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

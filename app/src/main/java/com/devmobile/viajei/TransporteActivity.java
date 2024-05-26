@@ -1,7 +1,7 @@
 package com.devmobile.viajei;
 
-import static com.devmobile.viajei.extensios.Extensions.ParseDouble;
-import static com.devmobile.viajei.extensios.Extensions.ParseInt;
+import static java.lang.Double.parseDouble;
+import static java.lang.Integer.parseInt;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
@@ -31,12 +32,13 @@ import com.devmobile.viajei.database.dao.TransporteDAO;
 import com.devmobile.viajei.database.model.AviaoTransporteModel;
 import com.devmobile.viajei.database.model.CarroTransporteModel;
 import com.devmobile.viajei.database.model.TransporteModel;
+import com.devmobile.viajei.service.TransporteService;
 
 public class TransporteActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,TextWatcher, CompoundButton.OnCheckedChangeListener {
 
-    Button btnAdicionar, btnTransporteAvancar;
+    Button btnAdicionar, btnAvancar;
     EditText kmTotal, totalVeiculos, custoPorLitro, kmPorLitro, valorAluguelCarro, valorPassagemAerea;
-    TextView destinoTextView, totalCarroTransporteTextView, qtdPessoasTextView;
+    TextView destinoTextView, totalCarroTransporteTextView;
 
     int idUsuario,selectedTransport,qtdPessoas;
     long idNewAviaoTransporte = 0, idNewCarroTransporte = 0;
@@ -48,10 +50,10 @@ public class TransporteActivity extends AppCompatActivity implements AdapterView
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_transporte);
 
-        GetSharedPreferencesData();
-        SetDestinoView();
-        setQtdPessoasView();
-        GetTransporteArrayData();
+        setDestinoView();
+
+        getSharedPreferencesData();
+        getTransporteArrayData();
 
         CheckBox checkBoxAluguelCarro = findViewById(R.id.checkBox_aluguel_carro);
         valorPassagemAerea = findViewById(R.id.valor_passagem_avisao);
@@ -61,7 +63,7 @@ public class TransporteActivity extends AppCompatActivity implements AdapterView
         totalVeiculos = findViewById(R.id.total_veiculos);
         kmTotal = findViewById(R.id.km_total);
         btnAdicionar = findViewById(R.id.btn_transporte_adicionar);
-        btnTransporteAvancar = findViewById(R.id.btn_transporte_avancar);
+        btnAvancar = findViewById(R.id.btn_transporte_avancar);
 
         valorPassagemAerea.addTextChangedListener(this);
         valorAluguelCarro.addTextChangedListener(this);
@@ -72,7 +74,7 @@ public class TransporteActivity extends AppCompatActivity implements AdapterView
 
         btnAdicionar.setOnClickListener( x -> adicionar());
 
-        btnTransporteAvancar.setOnClickListener(v -> {
+        btnAvancar.setOnClickListener(x -> {
             Intent intent = new Intent(TransporteActivity.this, EntretenimentoActivity.class);
             startActivity(intent);
         });
@@ -80,19 +82,13 @@ public class TransporteActivity extends AppCompatActivity implements AdapterView
         checkBoxAluguelCarro.setOnCheckedChangeListener(this);
     }
 
-    private void SetDestinoView() {
+    private void setDestinoView() {
         destinoTextView = findViewById(R.id.nome_destino);
         String textoDestino = getString(R.string.destino) + " " + destino;
         destinoTextView.setText(textoDestino);
     }
 
-    private void setQtdPessoasView() {
-        qtdPessoasTextView = findViewById(R.id.qtd_pessoas_transporte);
-        String textoQtdPessoas = "Para " + qtdPessoas + " pessoas.";
-        qtdPessoasTextView.setText(textoQtdPessoas);
-    }
-
-    private void GetTransporteArrayData() {
+    private void getTransporteArrayData() {
         Spinner spinner = (Spinner) findViewById(R.id.transporte_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this,
@@ -104,7 +100,7 @@ public class TransporteActivity extends AppCompatActivity implements AdapterView
         spinner.setOnItemSelectedListener(this);
     }
 
-    private void GetSharedPreferencesData() {
+    private void getSharedPreferencesData() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(TransporteActivity.this);
 
         destino = sharedPreferences.getString("destino", "");
@@ -115,20 +111,20 @@ public class TransporteActivity extends AppCompatActivity implements AdapterView
     private void adicionar() {
         switch (selectedTransport){
             case 0:
-                InsertAviaoTransporte();
+                insertAviaoTransporte();
                 break;
             case 1:
-                InsertCarroTransporte();
+                insertCarroTransporte();
                 break;
         }
 
-        InsertTransporte();
+        insertTransporte();
 
     }
 
-    private void InsertAviaoTransporte() {
+    private void insertAviaoTransporte() {
         AviaoTransporteModel aviaoTransporteModel = new AviaoTransporteModel(
-                ParseDouble(valorPassagemAerea.getText().toString())
+                parseDouble(valorPassagemAerea.getText().toString())
         );
 
         try {
@@ -142,7 +138,7 @@ public class TransporteActivity extends AppCompatActivity implements AdapterView
         }
     }
 
-    private void InsertTransporte() {
+    private void insertTransporte() {
         TransporteModel transporteModel = new TransporteModel(
                 idNewAviaoTransporte,
                 idNewCarroTransporte,
@@ -160,13 +156,22 @@ public class TransporteActivity extends AppCompatActivity implements AdapterView
         }
     }
 
-    private void InsertCarroTransporte() {
+    private void insertCarroTransporte() {
+        double valorAluguel = parseDouble(valorAluguelCarro.getText().toString());
+        double kmTotalTrajeto = parseDouble(kmTotal.getText().toString());
+        double kmLitro = parseDouble(kmPorLitro.getText().toString());
+        double custoLitro = parseDouble(custoPorLitro.getText().toString());
+        int totalDeVeiculos = parseInt(totalVeiculos.getText().toString());
+
+        double total = Double.parseDouble(TransporteService.calcularTotal(kmTotalTrajeto, kmLitro, custoLitro, totalDeVeiculos, valorAluguel));
+
         CarroTransporteModel carroTransporteModel = new CarroTransporteModel(
-                ParseDouble(valorAluguelCarro.getText().toString()),
-                ParseDouble(kmTotal.getText().toString()),
-                ParseDouble(kmPorLitro.getText().toString()),
-                ParseDouble(custoPorLitro.getText().toString()),
-                Integer.parseInt(totalVeiculos.getText().toString())
+                valorAluguel,
+                kmTotalTrajeto,
+                kmLitro,
+                custoLitro,
+                totalDeVeiculos,
+                total
         );
 
         try {
@@ -211,8 +216,8 @@ public class TransporteActivity extends AppCompatActivity implements AdapterView
     private void updateTotal(CharSequence s) {
         TextView totalAviaoTransporteTextView = findViewById(R.id.total_aviao_transporte);
         try {
-            double valorPassagem = Double.parseDouble(s.toString());
-            double total = valorPassagem * qtdPessoas; // Calculate the total here
+            double valorPassagem = parseDouble(s.toString());
+            double total = valorPassagem * qtdPessoas;
             totalAviaoTransporteTextView.setText(String.format("Total: %.2f", total));
         } catch (NumberFormatException e) {
             totalAviaoTransporteTextView.setText("Total: 0.00");
@@ -226,12 +231,12 @@ public class TransporteActivity extends AppCompatActivity implements AdapterView
         totalCarroTransporteTextView = findViewById(R.id.total_carro_transporte);
 
         try {
-            double valorAluguel = ParseDouble(valorAluguelCarro.getText().toString());
-            double kmTotalTrajeto = ParseDouble(kmTotal.getText().toString());
-            double kmLitro = ParseDouble(kmPorLitro.getText().toString());
-            double custoLitro = ParseDouble(custoPorLitro.getText().toString());
-            int totalDeVeiculos = ParseInt(totalVeiculos.getText().toString());
-            double total = (((kmTotalTrajeto / kmLitro ) * custoLitro) / totalDeVeiculos) + valorAluguel;
+            double valorAluguel = parseDouble(valorAluguelCarro.getText().toString());
+            double kmTotalTrajeto = parseDouble(kmTotal.getText().toString());
+            double kmLitro = parseDouble(kmPorLitro.getText().toString());
+            double custoLitro = parseDouble(custoPorLitro.getText().toString());
+            int totalDeVeiculos = parseInt(totalVeiculos.getText().toString());
+            double total = Double.parseDouble(TransporteService.calcularTotal(kmTotalTrajeto, kmLitro, custoLitro, totalDeVeiculos, valorAluguel));
 
             if(Double.isNaN(total) || Double.isInfinite(total)){
                 totalCarroTransporteTextView.setText(String.format("Insira todos os dados."));
@@ -243,6 +248,7 @@ public class TransporteActivity extends AppCompatActivity implements AdapterView
             totalCarroTransporteTextView.setText("Total: 0.00");
         }
     }
+
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         LinearLayout layoutAluguelCarro = findViewById(R.id.layout_aluguel_carro);
@@ -250,6 +256,7 @@ public class TransporteActivity extends AppCompatActivity implements AdapterView
         if (isChecked) {
             layoutAluguelCarro.setVisibility(View.VISIBLE);
         } else {
+            valorAluguelCarro.setText("");
             layoutAluguelCarro.setVisibility(View.GONE);
         }
     }

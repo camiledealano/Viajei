@@ -47,7 +47,7 @@ public class CarroTransporteDAO extends AbstractDAO {
         return newRow;
     }
 
-    public CarroTransporteModel Select(final long id) {
+    public CarroTransporteModel findById(final long id) {
 
         CarroTransporteModel model = null;
         String idString = Long.toString(id);

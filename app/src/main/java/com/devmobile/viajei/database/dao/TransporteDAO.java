@@ -50,7 +50,7 @@ public class TransporteDAO extends AbstractDAO {
         }
     }
 
-    public TransporteModel Select(final int idUsuario) {
+    public TransporteModel findByIdUsuario(final int idUsuario) {
 
         TransporteModel model = null;
 

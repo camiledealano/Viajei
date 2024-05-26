@@ -27,6 +27,7 @@ public class AlimentacaoModel {
     private Integer qtdRefeicoes;
     private Double total;
 
+    public AlimentacaoModel(){}
     public AlimentacaoModel(int idUsuario, Double custoMedio, Integer qtdRefeicoes, Double total) {
         this.idUsuario = idUsuario;
         this.custoMedio = custoMedio;

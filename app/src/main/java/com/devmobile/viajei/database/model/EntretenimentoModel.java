@@ -28,6 +28,7 @@ public class EntretenimentoModel {
     private BigDecimal valor;
     private BigDecimal total;
 
+    public EntretenimentoModel(){}
     public EntretenimentoModel(int idUsuario, String nomeLazer, BigDecimal valor, BigDecimal total) {
         this.idUsuario = idUsuario;
         this.nomeLazer = nomeLazer;

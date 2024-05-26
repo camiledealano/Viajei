@@ -34,6 +34,11 @@ public class HospedagemModel {
     private Integer qtdNoites;
     private Double total;
 
+
+    public HospedagemModel()
+    {
+
+    }
     public HospedagemModel(Integer idUsuario, Double custoMedio, Integer qtdQuartos, Integer qtdPessoas, Integer qtdNoites, Double total) {
         this.idUsuario = idUsuario;
         this.custoMedio = custoMedio;

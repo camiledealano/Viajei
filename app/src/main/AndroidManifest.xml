@@ -24,13 +24,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HomeActivity"/>
+        <activity android:name=".RelatorioActivity"/>
         <activity android:name=".CriarUsuarioActivity"/>
-        <activity android:name=".TransporteActivity"/>
+        <activity android:name=".HomeActivity"/>
         <activity android:name=".HospedagemActivity"/>
         <activity android:name=".AlimentacaoActivity"/>
         <activity android:name=".EntretenimentoActivity"/>
-        <activity android:name=".RelatorioActivity"/>
+        <activity android:name=".TransporteActivity"/>
     </application>
 
 </manifest>

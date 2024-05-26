@@ -9,6 +9,7 @@ public class CarroTransporteModel {
     public static final String KM_LITRO = "km_litro";
     public static final String CUSTO_LITRO = "custo_litro";
     public static final String TOTAL_VEICULOS = "total_veiculos";
+    public static final String TOTAL = "total";
 
     public static final String CREATE_TABLE = "CREATE TABLE " + TABELA_NOME +
             "( "
@@ -17,7 +18,8 @@ public class CarroTransporteModel {
             + KILOMETRO_TOTAL+ " NUMERIC, "
             + KM_LITRO+ " NUMERIC, "
             + CUSTO_LITRO+ " NUMERIC, "
-            + TOTAL_VEICULOS+ " INTEGER "
+            + TOTAL_VEICULOS+ " INTEGER, "
+            + TOTAL + " NUMERIC "
             + ");";
 
     public static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABELA_NOME;
@@ -29,17 +31,21 @@ public class CarroTransporteModel {
     private double custoLitro;
     private int totalVeiculos;
 
+    private double total;
+
     public CarroTransporteModel()
     {
 
     }
 
-    public CarroTransporteModel(double valorAluguelCarro, double kilometroTotal, double kmLitro, double custoLitro, int totalVeiculos) {
+    public CarroTransporteModel(double valorAluguelCarro, double kilometroTotal, double kmLitro,
+                                double custoLitro, int totalVeiculos, double total) {
         this.valorAluguelCarro = valorAluguelCarro;
         this.kilometroTotal = kilometroTotal;
         this.kmLitro = kmLitro;
         this.custoLitro = custoLitro;
         this.totalVeiculos = totalVeiculos;
+        this.total = total;
     }
 
     public int getId() {
@@ -88,5 +94,13 @@ public class CarroTransporteModel {
 
     public void setTotalVeiculos(int totalVeiculos) {
         this.totalVeiculos = totalVeiculos;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
     }
 }

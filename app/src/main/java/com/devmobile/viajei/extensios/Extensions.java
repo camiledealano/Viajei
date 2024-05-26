@@ -1,7 +1,7 @@
 package com.devmobile.viajei.extensios;
 
 public class Extensions {
-    public static double ParseDouble(String strNumber) {
+    public static double parseDouble(String strNumber) {
         if (strNumber != null && strNumber.length() > 0) {
             try {
                 return Double.parseDouble(strNumber);
@@ -12,7 +12,7 @@ public class Extensions {
         else return 0;
     }
 
-    public static int ParseInt(String strNumber) {
+    public static int parseInt(String strNumber) {
         if (strNumber != null && strNumber.length() > 0) {
             try {
                 return Integer.parseInt(strNumber);
@@ -21,5 +21,9 @@ public class Extensions {
             }
         }
         else return 0;
+    }
+
+    public static String formatToBRL(String value){
+        return String.format("R$ %.2f", value);
     }
 }

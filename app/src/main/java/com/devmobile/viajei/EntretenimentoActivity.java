@@ -1,5 +1,6 @@
 package com.devmobile.viajei;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -89,7 +90,8 @@ public class EntretenimentoActivity extends AppCompatActivity {
         });
 
         btnAvancar.setOnClickListener(v -> {
-            //leva pra pagina de relatorios
+            Intent intent = new Intent(EntretenimentoActivity.this, RelatorioActivity.class);
+            startActivity(intent);
         });
     }
 }
