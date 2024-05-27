@@ -53,7 +53,7 @@ public class HomeDAO extends AbstractDAO {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
                 model = cursorToStructure(cursor);
-                cursor.moveToNext();
+                break;
             }
         }
         finally {

@@ -2,9 +2,11 @@ package com.devmobile.viajei;
 
 import static com.devmobile.viajei.extensios.Extensions.formatToBRL;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +40,8 @@ public class RelatorioActivity extends AppCompatActivity {
     int qtdPessoas, qtdNoites;
     long idUsuario, idHome;
     String destino;
+
+    Button btnHome;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +59,7 @@ public class RelatorioActivity extends AppCompatActivity {
         qtdPessoa = findViewById(R.id.rel_qtd_pessoa);
         qtdNoite = findViewById(R.id.rel_qtd_noites);
         relNomeDestino = findViewById(R.id.rel_nome_destino);
+        btnHome = findViewById(R.id.btn_home);
 
         SetTextEditView();
 
@@ -65,6 +70,11 @@ public class RelatorioActivity extends AppCompatActivity {
 
         calcularTotalPorPessoa(totalHospedagem, totalTransporte, totalAlimentacao, totalEntretenimento);
         calcularTotal(totalHospedagem, totalTransporte, totalAlimentacao, totalEntretenimento);
+
+        btnHome.setOnClickListener(v -> {
+            Intent intent = new Intent(RelatorioActivity.this, HomeActivity.class);
+            startActivity(intent);
+        });
 
     }
 
