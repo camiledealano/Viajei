@@ -67,9 +67,14 @@ public class EntretenimentoActivity extends AppCompatActivity {
             String nomeEntretenimentoStr = nomeEntretenimento.getText().toString();
             String valorEntretenimentoStr = valorEntretenimento.getText().toString();
 
-            if (nomeEntretenimentoStr.isEmpty() || valorEntretenimentoStr.isEmpty()) {
-                Toast.makeText(EntretenimentoActivity.this, "Por favor, preencha todos os campos", Toast.LENGTH_SHORT).show();
-                return;
+            EntretenimentoDAO entretenimentoDAO = new EntretenimentoDAO(EntretenimentoActivity.this);
+            List<EntretenimentoModel> entretenimentoModelList = entretenimentoDAO.findByIdHome(idHome);
+
+            if(entretenimentoModelList.stream().count() == 0){
+                if (nomeEntretenimentoStr.isEmpty() || valorEntretenimentoStr.isEmpty()) {
+                    Toast.makeText(EntretenimentoActivity.this, "Por favor, preencha todos os campos", Toast.LENGTH_SHORT).show();
+                    return;
+                }
             }
 
             BigDecimal valorEntretenimentoValue = new BigDecimal(valorEntretenimentoStr);
@@ -85,7 +90,6 @@ public class EntretenimentoActivity extends AppCompatActivity {
             );
 
             try {
-                EntretenimentoDAO entretenimentoDAO = new EntretenimentoDAO(EntretenimentoActivity.this);
                 entretenimentoDAO.insertOrUpdate(entretenimentoModel);
 
                 adicionouEntretenimento = true;
