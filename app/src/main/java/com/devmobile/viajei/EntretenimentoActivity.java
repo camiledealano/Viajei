@@ -87,6 +87,8 @@ public class EntretenimentoActivity extends AppCompatActivity {
             try {
                 EntretenimentoDAO entretenimentoDAO = new EntretenimentoDAO(EntretenimentoActivity.this);
                 entretenimentoDAO.insertOrUpdate(entretenimentoModel);
+
+                adicionouEntretenimento = true;
             } catch (Exception e) {
                 Toast.makeText(EntretenimentoActivity.this, "Erro ao salvar entretenimento: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
