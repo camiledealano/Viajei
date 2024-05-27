@@ -109,7 +109,7 @@ public class HospedagemDAO extends AbstractDAO {
                     (
                             HospedagemModel.TABELA_NOME,
                             colunas,
-                            HospedagemModel.ID_USUARIO + " = ? ",
+                            HospedagemModel.ID_HOME + " = ? ",
                             new String[]{idHomeString},
                             null,
                             null,

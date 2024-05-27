@@ -69,6 +69,8 @@ public class TransporteActivity extends AppCompatActivity implements AdapterView
         cardCarro = findViewById(R.id.card_carro);
         cardAviao = findViewById(R.id.card_aviao);
         spinner = (Spinner) findViewById(R.id.transporte_spinner);
+        totalCarroTransporteTextView = findViewById(R.id.total_carro_transporte);
+
         valorPassagemAerea.addTextChangedListener(this);
         valorAluguelCarro.addTextChangedListener(this);
         kmPorLitro.addTextChangedListener(this);
@@ -144,7 +146,7 @@ public class TransporteActivity extends AppCompatActivity implements AdapterView
            kmPorLitro.setText(String.valueOf(carroTransporteModel.getKmLitro()));
            custoPorLitro.setText(String.valueOf(carroTransporteModel.getCustoLitro()));
            totalVeiculos.setText(String.valueOf(carroTransporteModel.getTotalVeiculos()));
-           totalCarroTransporteTextView.setText("Total: " + Extensions.formatToBRL(carroTransporteModel.getTotal()));
+
            adicionouTransporte = true;
 
            spinner.setSelection(1);
@@ -195,7 +197,7 @@ public class TransporteActivity extends AppCompatActivity implements AdapterView
         String valorPassagemStr = valorPassagemEditText.getText().toString();
 
         if (valorPassagemStr.isEmpty()) {
-            Toast.makeText(TransporteActivity.this, "Por favor insera o valor!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(TransporteActivity.this, "Por favor insira o valor!", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -255,6 +257,13 @@ public class TransporteActivity extends AppCompatActivity implements AdapterView
         double custoLitro = parseDouble(custoPorLitroStr);
         int totalDeVeiculos = parseInt(totalVeiculosStr);
 
+        if (kmTotal.getText().toString().isEmpty() ||
+                kmPorLitro.getText().toString().isEmpty() ||
+                custoPorLitro.getText().toString().isEmpty() ||
+                totalVeiculos.getText().toString().isEmpty()) {
+            Toast.makeText(TransporteActivity.this, "Por favor insira todos os valores!", Toast.LENGTH_SHORT).show();
+        }
+
         double total = TransporteService.calcularTotal(kmTotalTrajeto, kmLitro, custoLitro, totalDeVeiculos, valorAluguel);
 
         CarroTransporteModel carroTransporteModel = new CarroTransporteModel(
@@ -306,8 +315,13 @@ public class TransporteActivity extends AppCompatActivity implements AdapterView
 
         try {
             double valorPassagem = parseDouble(s.toString());
+
+            if(valorPassagem < 0 ){
+                return;
+            }
+
             double total = valorPassagem * qtdPessoas;
-            totalAviaoTransporteTextView.setText(String.format("Total: %.2f", total));
+            totalAviaoTransporteTextView.setText("Total: " + Extensions.formatToBRL(total));
         } catch (NumberFormatException e) {
             totalAviaoTransporteTextView.setText("Total: 0.00");
         }
@@ -317,10 +331,8 @@ public class TransporteActivity extends AppCompatActivity implements AdapterView
         calculateTotal();
     }
     private void calculateTotal() {
-        totalCarroTransporteTextView = findViewById(R.id.total_carro_transporte);
-
         try {
-            double valorAluguel = parseDouble(valorAluguelCarro.getText().toString());
+            double valorAluguel = checkboxAluguel ? parseDouble(valorAluguelCarro.getText().toString()) : 0;
             double kmTotalTrajeto = parseDouble(kmTotal.getText().toString());
             double kmLitro = parseDouble(kmPorLitro.getText().toString());
             double custoLitro = parseDouble(custoPorLitro.getText().toString());

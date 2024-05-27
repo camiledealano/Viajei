@@ -39,6 +39,7 @@ public class CarroTransporteDAO extends AbstractDAO {
             values.put(CarroTransporteModel.KM_LITRO, carroTransporteModel.getKmLitro());
             values.put(CarroTransporteModel.CUSTO_LITRO, carroTransporteModel.getCustoLitro());
             values.put(CarroTransporteModel.TOTAL_VEICULOS, carroTransporteModel.getTotalVeiculos());
+            values.put(CarroTransporteModel.TOTAL, carroTransporteModel.getTotal());
 
             newRow = db.insert(CarroTransporteModel.TABELA_NOME, null, values);
         } finally {

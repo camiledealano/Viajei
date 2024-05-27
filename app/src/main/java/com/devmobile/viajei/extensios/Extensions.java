@@ -1,5 +1,7 @@
 package com.devmobile.viajei.extensios;
 
+import android.widget.EditText;
+
 import java.text.NumberFormat;
 import java.util.Locale;
 
