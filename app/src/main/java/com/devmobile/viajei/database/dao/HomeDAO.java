@@ -22,7 +22,7 @@ public class HomeDAO extends AbstractDAO {
 
     public HomeDAO (Context context) { db_helper = new DBOpenHelper(context);}
 
-    public void insert(HomeModel homeModel) {
+    public long insert(HomeModel homeModel) {
         try {
             open();
 
@@ -30,7 +30,8 @@ public class HomeDAO extends AbstractDAO {
             values.put(HomeModel.NOME_DESTINO, homeModel.getNomeDestino());
             values.put(HomeModel.ID_USUARIO, homeModel.getIdUsuario());
 
-            db.insert(HomeModel.TABELA_NOME, null, values);
+            long id = db.insert(HomeModel.TABELA_NOME, null, values);
+            return id;
         } finally {
             close();
         }

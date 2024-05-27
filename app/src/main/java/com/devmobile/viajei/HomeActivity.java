@@ -22,6 +22,10 @@ import com.devmobile.viajei.database.model.HospedagemModel;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
+    String usuario, destino_destino;
+
+    Long idUsuario;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +40,9 @@ public class HomeActivity extends AppCompatActivity {
         LinearLayout layoutDestinoCriado = findViewById(R.id.layout_destino_criado);
         TextView textViewDestino = findViewById(R.id.textViewDestino);
 
-        SharedPreferences sharedPreferences   = PreferenceManager.getDefaultSharedPreferences(HomeActivity.this);
-        String usuario = sharedPreferences.getString("nomeUsuario", "");
-        long idUsuario = sharedPreferences.getLong("idUsuario", -1);
+        sharedPreferences   = PreferenceManager.getDefaultSharedPreferences(HomeActivity.this);
+        usuario = sharedPreferences.getString("nomeUsuario", "");
+        idUsuario = sharedPreferences.getLong("idUsuario", -1);
 
         TextView txtViewBoasVindas = findViewById(R.id.txt_boas_vindas);
         String boasVindasStr = "Olá " + usuario + "! Para onde você vai hoje?";
@@ -47,8 +51,10 @@ public class HomeActivity extends AppCompatActivity {
         buscaSimulacao(idUsuario);
 
         btnCriarDestino.setOnClickListener(v -> {
-            String destino_destino = nomeDestino.getText().toString();
+            destino_destino = nomeDestino.getText().toString();
             if (!destino_destino.isEmpty()) {
+                destino_destino = destino_destino.substring(0, 1).toUpperCase() + destino_destino.substring(1);
+
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("destino", destino_destino);
                 editor.apply();
@@ -62,14 +68,25 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         btnSimular.setOnClickListener(v -> {
+            InserirHome();
             Intent intent = new Intent(HomeActivity.this, HospedagemActivity.class);
             startActivity(intent);
         });
 
         btnVisualizar.setOnClickListener(v -> {
-            Intent intent = new Intent(HomeActivity.this, RelatorioActivity.class);
+            Intent intent = new Intent(HomeActivity.this, HospedagemActivity.class);
             startActivity(intent);
         });
+    }
+
+    private void InserirHome() {
+        HomeDAO homeDAO = new HomeDAO(HomeActivity.this);
+        HomeModel model = new HomeModel(destino_destino, idUsuario);
+        long idHome = homeDAO.insert(model);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putLong("idHome", idHome);
+        editor.apply();
     }
 
     private void buscaSimulacao(long idUsuario) {

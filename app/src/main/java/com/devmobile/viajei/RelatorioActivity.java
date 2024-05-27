@@ -36,7 +36,7 @@ public class RelatorioActivity extends AppCompatActivity {
     TextView totalPorPessoa, totalHospedagem, totalTransporte, totalAlimentacao,
             totalEntretenimento, totalViagem, qtdPessoa, qtdNoite, relNomeDestino;
     int qtdPessoas, qtdNoites;
-    long idUsuario;
+    long idUsuario, idHome;
     String destino;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +87,7 @@ public class RelatorioActivity extends AppCompatActivity {
 
     private double calcularTotalEntretenimento() {
         EntretenimentoDAO entretenimentoDAO = new EntretenimentoDAO(RelatorioActivity.this);
-        List<EntretenimentoModel> entretenimentoModelList =  entretenimentoDAO.findByIdUsuario(idUsuario);
+        List<EntretenimentoModel> entretenimentoModelList =  entretenimentoDAO.findByIdHome(idUsuario);
 
         if (entretenimentoModelList == null || entretenimentoModelList.isEmpty()) {
             Toast.makeText(RelatorioActivity.this, "Nenhum entretenimento encontrado para o usuário especificado.", Toast.LENGTH_LONG).show();
@@ -104,7 +104,7 @@ public class RelatorioActivity extends AppCompatActivity {
     }
     private double calcularAlimentacao() {
         AlimentacaoDAO alimentacaoDAO = new AlimentacaoDAO(RelatorioActivity.this);
-        AlimentacaoModel AlimentacaoModel = alimentacaoDAO.FindByIdUsuario(idUsuario);
+        AlimentacaoModel AlimentacaoModel = alimentacaoDAO.findByIdHome(idHome);
 
         if (AlimentacaoModel == null) {
             Toast.makeText(RelatorioActivity.this, "Alimentação não encontrada para o usuário especificado.", Toast.LENGTH_LONG).show();
@@ -121,7 +121,7 @@ public class RelatorioActivity extends AppCompatActivity {
         CarroTransporteDAO carroTransporteDAO = new CarroTransporteDAO(RelatorioActivity.this);
         AviaoTransporteDAO aviaoTransporteDAO = new AviaoTransporteDAO(RelatorioActivity.this);
 
-        TransporteModel transporteModel = transporteDAO.findByIdUsuario(idUsuario);
+        TransporteModel transporteModel = transporteDAO.findByIdHome(idHome);
 
         if(transporteModel == null){
             Toast.makeText(RelatorioActivity.this, "Transporte não encontrado para o usuário especificado.", Toast.LENGTH_LONG).show();
@@ -146,7 +146,7 @@ public class RelatorioActivity extends AppCompatActivity {
     }
     private double calcularHospedagem() {
         HospedagemDAO hospedagemDAO = new HospedagemDAO(RelatorioActivity.this);
-        HospedagemModel hospedagemModel = hospedagemDAO.FindByIdUsuario(idUsuario);
+        HospedagemModel hospedagemModel = hospedagemDAO.findByIdHome(idHome);
 
         if (hospedagemModel == null) {
             Toast.makeText(RelatorioActivity.this, "Hospedagem não encontrada para o usuário especificado.", Toast.LENGTH_LONG).show();
@@ -164,6 +164,7 @@ public class RelatorioActivity extends AppCompatActivity {
         idUsuario = sharedPreferences.getLong("idUsuario", -1);
         qtdPessoas = sharedPreferences.getInt("qtdPessoas", 1);
         qtdNoites = sharedPreferences.getInt("qtdNoites", 0);
+        idHome = sharedPreferences.getLong("idHome", -1);
     }
 
 

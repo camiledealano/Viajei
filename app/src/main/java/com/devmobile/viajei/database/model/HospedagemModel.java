@@ -11,6 +11,7 @@ public class HospedagemModel {
     public static final String QTD_PESSOAS = "qtd_pessoas";
     public static final String QTD_NOITES = "qtd_noites";
     public static final String TOTAL = "total";
+    public static final String ID_HOME = "id_home";
 
     public static final String CREATE_TABLE = "CREATE TABLE " + TABELA_NOME +
             "( "
@@ -20,7 +21,8 @@ public class HospedagemModel {
                 + QTD_PESSOAS+ " NUMERIC NOT NULL, "
                 + QTD_NOITES+ " NUMERIC NOT NULL, "
                 + TOTAL + " NUMERIC NOT NULL, "
-                + ID_USUARIO + " NUMERIC NOT NULL" +
+                + ID_USUARIO + " NUMERIC NOT NULL,"
+                + ID_HOME + " NUMERIC NOT NULL" +
             ");";
 
     public static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABELA_NOME;
@@ -33,18 +35,20 @@ public class HospedagemModel {
     private Integer qtdPessoas;
     private Integer qtdNoites;
     private Double total;
+    private long idHome;
 
     public HospedagemModel()
     {
 
     }
-    public HospedagemModel(long idUsuario, Double custoMedio, Integer qtdQuartos, Integer qtdPessoas, Integer qtdNoites, Double total) {
+    public HospedagemModel(long idUsuario, Double custoMedio, Integer qtdQuartos, Integer qtdPessoas, Integer qtdNoites, Double total, Long idHome) {
         this.idUsuario = idUsuario;
         this.custoMedio = custoMedio;
         this.qtdQuartos = qtdQuartos;
         this.qtdPessoas = qtdPessoas;
         this.qtdNoites = qtdNoites;
         this.total = total;
+        this.idHome = idHome;
     }
 
     public int getId() {
@@ -101,5 +105,13 @@ public class HospedagemModel {
 
     public void setTotal(Double total) {
         this.total = total;
+    }
+
+    public long getIdHome() {
+        return idHome;
+    }
+
+    public void setIdHome(long idHome) {
+        this.idHome = idHome;
     }
 }

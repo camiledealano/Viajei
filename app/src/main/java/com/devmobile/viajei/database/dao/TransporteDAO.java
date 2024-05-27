@@ -20,19 +20,36 @@ public class TransporteDAO extends AbstractDAO {
             TransporteModel.ID,
             TransporteModel.ID_CARRO_TRANSPORTE,
             TransporteModel.ID_AVIAO_TRANSPORTE,
-            TransporteModel.ID_USUARIO
+            TransporteModel.ID_USUARIO,
+            TransporteModel.ID_HOME
     };
 
-    public void insert(TransporteModel transporteModel) {
+    public void insertOrUpdate(TransporteModel transporteModel) {
         try {
             open();
+
+            String idHomeString = Long.toString(transporteModel.getIdHome());
+            Cursor cursor = db.query(
+                    TransporteModel.TABELA_NOME,
+                    colunas,
+                    TransporteModel.ID_HOME + " = ?",
+                    new String[]{idHomeString},
+                    null,
+                    null,
+                    null
+            );
 
             ContentValues values = new ContentValues();
             values.put(TransporteModel.ID_AVIAO_TRANSPORTE, transporteModel.getIdAviaoTransporte());
             values.put(TransporteModel.ID_CARRO_TRANSPORTE, transporteModel.getIdCarroTransporte());
             values.put(TransporteModel.ID_USUARIO, transporteModel.getIdUsuario());
+            values.put(TransporteModel.ID_HOME, transporteModel.getIdHome());
 
-            db.insert(TransporteModel.TABELA_NOME, null, values);
+            if (cursor.moveToFirst()) {
+                db.update(TransporteModel.TABELA_NOME, values, TransporteModel.ID_HOME + " = ?", new String[]{idHomeString});
+            } else {
+                db.insert(TransporteModel.TABELA_NOME, null, values);
+            }
         } finally {
             close();
         }
@@ -68,12 +85,44 @@ public class TransporteDAO extends AbstractDAO {
         return model;
     }
 
+    public TransporteModel findByIdHome(final long idHome) {
+
+        TransporteModel model = null;
+
+        String idHomeString = Long.toString(idHome);
+
+        try {
+            open();
+            Cursor cursor = db.query
+                    (
+                            TransporteModel.TABELA_NOME,
+                            colunas,
+                            TransporteModel.ID_HOME + " = ? ",
+                            new String[]{idHomeString},
+                            null,
+                            null,
+                            null);
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                model = cursorToStructure(cursor);
+                break;
+            }
+        }
+        finally {
+            close();
+        }
+
+        return model;
+    }
+
     public final TransporteModel cursorToStructure(Cursor cursor) {
         TransporteModel model = new TransporteModel();
         model.setId(cursor.getInt(0));
         model.setIdCarroTransporte(cursor.getInt(1));
         model.setIdAviaoTransporte(cursor.getInt(2));
         model.setIdUsuario(cursor.getInt(3));
+        model.setIdHome(cursor.getLong(4));
+
         return model;
     }
 

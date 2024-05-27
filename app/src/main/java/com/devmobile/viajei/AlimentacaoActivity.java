@@ -17,9 +17,11 @@ import com.devmobile.viajei.service.AlimentacaoService;
 
 public class AlimentacaoActivity extends AppCompatActivity {
 
-    private EditText custoMedioAlimentacao;
-    private EditText qtdRefeicoes;
-
+    private EditText custoMedioAlimentacao, qtdRefeicoes;
+    private String destino;
+    private long idUsuario, idHome;
+    private int diasViagem, qtdPessoas;
+    private TextView destinoTextView, totalAlimentacaoTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,19 +29,16 @@ public class AlimentacaoActivity extends AppCompatActivity {
 
         custoMedioAlimentacao = findViewById(R.id.custo_medio_alimentacao);
         qtdRefeicoes          = findViewById(R.id.qtd_refeicoes);
-
+        destinoTextView = findViewById(R.id.nome_destino);
+        totalAlimentacaoTextView = findViewById(R.id.total_alimentacao);
         Button btnCalcularAlimentacao = findViewById(R.id.btn_calcular_alimentacao);
         Button btnAvancar             = findViewById(R.id.btn_alimentacao_avancar);
 
         AlimentacaoService alimentacaoService = new AlimentacaoService();
-        SharedPreferences sharedPreferences   = PreferenceManager.getDefaultSharedPreferences(AlimentacaoActivity.this);
 
-        int qtdPessoas = sharedPreferences.getInt("qtdPessoas", 0);
-        int diasViagem = sharedPreferences.getInt("qtdNoites", 0);
-        long idUsuario  = sharedPreferences.getLong("idUsuario", -1);
-        String destino = sharedPreferences.getString("destino", "");
+        obterSharedPreferences();
+        recuperarDados();
 
-        TextView destinoTextView = findViewById(R.id.nome_destino);
         String textoDestino = getString(R.string.destino) + " " + destino;
         destinoTextView.setText(textoDestino);
 
@@ -57,7 +56,7 @@ public class AlimentacaoActivity extends AppCompatActivity {
 
             double totalAlimentacao = alimentacaoService.calcularAlimentacao(custoMedioAlimentacaoValue, qtdRefeicoesValue, qtdPessoas, diasViagem);
 
-            TextView totalAlimentacaoTextView = findViewById(R.id.total_alimentacao);
+            totalAlimentacaoTextView = findViewById(R.id.total_alimentacao);
             String textoTotalAlimentacao = getString(R.string.total_parcial) + Extensions.formatToBRL(totalAlimentacao);
             totalAlimentacaoTextView.setText(textoTotalAlimentacao);
         });
@@ -80,12 +79,13 @@ public class AlimentacaoActivity extends AppCompatActivity {
                     idUsuario,
                     custoMedioAlimentacaoValue,
                     qtdRefeicoesValue,
-                    totalAlimentacao
+                    totalAlimentacao,
+                    idHome
             );
 
             try {
                 AlimentacaoDAO alimentacaoDAO = new AlimentacaoDAO(AlimentacaoActivity.this);
-                alimentacaoDAO.insert(alimentacaoModel);
+                alimentacaoDAO.insertOrUpdate(alimentacaoModel);
 
                 Intent intent = new Intent(AlimentacaoActivity.this, TransporteActivity.class);
                 startActivity(intent);
@@ -93,5 +93,36 @@ public class AlimentacaoActivity extends AppCompatActivity {
                 Toast.makeText(AlimentacaoActivity.this, "Erro ao salvar alimentação: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void recuperarDados() {
+
+        if(idHome == -1){
+            return;
+        }
+
+        AlimentacaoDAO alimentacaoDAO = new AlimentacaoDAO(AlimentacaoActivity.this);
+        AlimentacaoModel model = alimentacaoDAO.findByIdHome(idHome);
+
+        if(model == null){
+            return;
+        }
+
+        qtdRefeicoes.setText(model.getQtdRefeicoes().toString());
+        custoMedioAlimentacao.setText(model.getCustoMedio().toString());
+
+
+        String textoTotalAlimentacao = getString(R.string.total_parcial) + Extensions.formatToBRL(model.getTotal());
+        totalAlimentacaoTextView.setText(textoTotalAlimentacao);
+    }
+
+    private void obterSharedPreferences() {
+        SharedPreferences sharedPreferences   = PreferenceManager.getDefaultSharedPreferences(AlimentacaoActivity.this);
+
+        qtdPessoas = sharedPreferences.getInt("qtdPessoas", 0);
+        diasViagem = sharedPreferences.getInt("qtdNoites", 0);
+        idUsuario  = sharedPreferences.getLong("idUsuario", -1);
+        destino = sharedPreferences.getString("destino", "");
+        idHome  = sharedPreferences.getLong("idHome", -1);
     }
 }

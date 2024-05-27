@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.devmobile.viajei.database.dao.HospedagemDAO;
+import com.devmobile.viajei.database.model.HomeModel;
 import com.devmobile.viajei.database.model.HospedagemModel;
 import com.devmobile.viajei.extensios.Extensions;
 import com.devmobile.viajei.service.HospedagemService;
@@ -22,6 +23,13 @@ public class HospedagemActivity extends AppCompatActivity {
     private EditText qtdPessoas;
     private EditText qtdNoites;
 
+    SharedPreferences sharedPreferences;
+
+    long idUsuario, idHome;
+    TextView totalHospedagemTextView;
+
+    String destino;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,15 +39,14 @@ public class HospedagemActivity extends AppCompatActivity {
         qtdQuartos = findViewById(R.id.qtd_quartos);
         qtdPessoas = findViewById(R.id.qtd_pessoas);
         qtdNoites  = findViewById(R.id.qtd_noites);
-
+        totalHospedagemTextView = findViewById(R.id.total_hospedagem);
         HospedagemService hospedagemService = new HospedagemService();
 
         Button btnCalcular = findViewById(R.id.btnHospedagemCalcular);
         Button btnAvancar  = findViewById(R.id.btnHospedagemAvancar);
 
-        SharedPreferences sharedPreferences   = PreferenceManager.getDefaultSharedPreferences(HospedagemActivity.this);
-        String destino = sharedPreferences.getString("destino", "");
-        long idUsuario  = sharedPreferences.getLong("idUsuario", -1);
+        ObterSharedPreferences();
+        RecuperarDados();
 
         TextView destinoTextView = findViewById(R.id.nome_destino);
         String textoDestino = getString(R.string.destino) + " " + destino;
@@ -62,7 +69,7 @@ public class HospedagemActivity extends AppCompatActivity {
 
             double totalHospedagem = hospedagemService.calcularTotalHospedagem(custoMedioValue, qtdNoitesValue, qtdQuartosValue);
 
-            TextView totalHospedagemTextView = findViewById(R.id.total_hospedagem);
+
             String textoTotalHospedagem = getString(R.string.total_parcial) + Extensions.formatToBRL(totalHospedagem);
             totalHospedagemTextView.setText(textoTotalHospedagem);
         });
@@ -91,12 +98,13 @@ public class HospedagemActivity extends AppCompatActivity {
                     qtdQuartosValue,
                     qtdPessoasValue,
                     qtdNoitesValue,
-                    totalHospedagemValue
+                    totalHospedagemValue,
+                    idHome
             );
 
             try {
                 HospedagemDAO hospedagemDAO = new HospedagemDAO(HospedagemActivity.this);
-                hospedagemDAO.insert(hospedagemModel);
+                hospedagemDAO.insertOrUpdate(hospedagemModel);
 
                 SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -111,5 +119,34 @@ public class HospedagemActivity extends AppCompatActivity {
                 Toast.makeText(HospedagemActivity.this, "Erro ao salvar hospedagem: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void RecuperarDados() {
+        if(idHome == -1){
+            return;
+        }
+
+        HospedagemDAO hospedagemDAO = new HospedagemDAO(HospedagemActivity.this);
+        HospedagemModel model = hospedagemDAO.findByIdHome(idHome);
+
+        if(model == null){
+            return;
+        }
+
+        custoMedio.setText(model.getCustoMedio().toString());
+        qtdQuartos.setText(model.getQtdQuartos().toString());
+        qtdPessoas.setText(model.getQtdPessoas().toString());
+        qtdNoites.setText(model.getQtdNoites().toString());
+
+        String textoTotalHospedagem = getString(R.string.total_parcial) + Extensions.formatToBRL(model.getTotal());
+        totalHospedagemTextView.setText(textoTotalHospedagem);
+
+    }
+
+    private void ObterSharedPreferences() {
+        sharedPreferences   = PreferenceManager.getDefaultSharedPreferences(HospedagemActivity.this);
+        destino = sharedPreferences.getString("destino", "");
+        idUsuario  = sharedPreferences.getLong("idUsuario", -1);
+        idHome  = sharedPreferences.getLong("idHome", -1);
     }
 }

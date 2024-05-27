@@ -20,10 +20,17 @@ import com.devmobile.viajei.extensios.Extensions;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class EntretenimentoActivity extends AppCompatActivity {
 
+    long idUsuario, idHome;
+    String destino;
+    EntretenimentoAdapter adapter;
+    ArrayList<EntretenimentoModel> entretenimentos;
+    ListView listaEntretenimentos;
+    TextView totalEntretenimentoTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,18 +39,16 @@ public class EntretenimentoActivity extends AppCompatActivity {
 
         EditText nomeEntretenimento = findViewById(R.id.nome_entretenimento);
         EditText valorEntretenimento = findViewById(R.id.valor_entretenimento);
-
+        totalEntretenimentoTextView = findViewById(R.id.total_entretenimento);
         Button btnAdicionar = findViewById(R.id.btn_adicionar_entretenimento);
         Button btnAvancar = findViewById(R.id.btn_entretenimento_avancar);
-        ListView listaEntretenimentos = findViewById(R.id.lista_entretenimentos);
+        listaEntretenimentos = findViewById(R.id.lista_entretenimentos);
 
-        EntretenimentoAdapter adapter = new EntretenimentoAdapter(EntretenimentoActivity.this);
+        adapter = new EntretenimentoAdapter(EntretenimentoActivity.this);
+        entretenimentos = new ArrayList<>();
 
-        ArrayList<EntretenimentoModel> entretenimentos = new ArrayList<>();
-
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(EntretenimentoActivity.this);
-        String destino = sharedPreferences.getString("destino", "");
-        long idUsuario = sharedPreferences.getLong("idUsuario", -1);
+        obterSharedPreferences();
+        obterDados();
 
         TextView destinoTextView = findViewById(R.id.nome_destino);
         String textoDestino = getString(R.string.destino) + " " + destino;
@@ -68,12 +73,13 @@ public class EntretenimentoActivity extends AppCompatActivity {
                     idUsuario,
                     nomeEntretenimentoStr,
                     valorEntretenimentoValue,
-                    valorTotal
+                    valorTotal,
+                    idHome
             );
 
             try {
                 EntretenimentoDAO entretenimentoDAO = new EntretenimentoDAO(EntretenimentoActivity.this);
-                entretenimentoDAO.insert(entretenimentoModel);
+                entretenimentoDAO.insertOrUpdate(entretenimentoModel);
             } catch (Exception e) {
                 Toast.makeText(EntretenimentoActivity.this, "Erro ao salvar entretenimento: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
@@ -82,7 +88,6 @@ public class EntretenimentoActivity extends AppCompatActivity {
             adapter.setItens(entretenimentos);
             listaEntretenimentos.setAdapter(adapter);
 
-            TextView totalEntretenimentoTextView = findViewById(R.id.total_entretenimento);
             String textoTotalEntretenimento = getString(R.string.total_parcial) + Extensions.formatToBRL(valorTotal.doubleValue());
             totalEntretenimentoTextView.setText(textoTotalEntretenimento);
 
@@ -94,5 +99,33 @@ public class EntretenimentoActivity extends AppCompatActivity {
             Intent intent = new Intent(EntretenimentoActivity.this, RelatorioActivity.class);
             startActivity(intent);
         });
+    }
+
+    private void obterDados() {
+        if(idHome == -1 ){
+            return;
+        }
+
+        EntretenimentoDAO entretenimentoDAO = new EntretenimentoDAO(EntretenimentoActivity.this);
+        List<EntretenimentoModel> entretenimentoModelList = entretenimentoDAO.findByIdHome(idHome);
+
+        BigDecimal total = BigDecimal.ZERO;;
+        for(EntretenimentoModel model : entretenimentoModelList){
+            entretenimentos.add(model);
+            total = total.add(model.getTotal());
+        }
+
+        adapter.setItens(entretenimentos);
+        listaEntretenimentos.setAdapter(adapter);
+
+        String textoTotalEntretenimento = getString(R.string.total_parcial) + Extensions.formatToBRL(total.doubleValue());
+        totalEntretenimentoTextView.setText(textoTotalEntretenimento);
+    }
+
+    private void obterSharedPreferences() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(EntretenimentoActivity.this);
+        destino = sharedPreferences.getString("destino", "");
+        idUsuario = sharedPreferences.getLong("idUsuario", -1);
+        idHome = sharedPreferences.getLong("idHome", -1);
     }
 }

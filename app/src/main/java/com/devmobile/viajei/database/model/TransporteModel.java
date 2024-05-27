@@ -8,12 +8,14 @@ public class TransporteModel {
     public static final String ID_AVIAO_TRANSPORTE = "id_aviao_transporte";
     public static final String ID_CARRO_TRANSPORTE = "id_carro_transporte";
     public static final String ID_USUARIO = "id_usuario";
+    public static final String ID_HOME = "id_home";
     public static final String CREATE_TABLE = "CREATE TABLE " + TABELA_NOME +
             "( "
             + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + ID_USUARIO + " INTEGER, "
             + ID_AVIAO_TRANSPORTE + " INTEGER, "
-            + ID_CARRO_TRANSPORTE + " INTEGER "
+            + ID_CARRO_TRANSPORTE + " INTEGER, "
+            + ID_HOME + " NUMERIC NOT NULL"
             + ");";
 
     public static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABELA_NOME;
@@ -22,16 +24,18 @@ public class TransporteModel {
     private long idAviaoTransporte;
     private long idCarroTransporte;
     private long idUsuario;
+    private long idHome;
 
     public TransporteModel()
     {
 
     }
 
-    public TransporteModel(long idAviaoTransporte, long idCarroTransporte, long idUsuario) {
+    public TransporteModel(long idAviaoTransporte, long idCarroTransporte, long idUsuario, long idHome) {
         this.idAviaoTransporte = idAviaoTransporte;
         this.idCarroTransporte = idCarroTransporte;
         this.idUsuario = idUsuario;
+        this.idHome = idHome;
     }
 
     public long getIdAviaoTransporte() {
@@ -64,5 +68,13 @@ public class TransporteModel {
 
     public void setIdUsuario(long idUsuario) {
         this.idUsuario = idUsuario;
+    }
+
+    public long getIdHome() {
+        return idHome;
+    }
+
+    public void setIdHome(long idHome) {
+        this.idHome = idHome;
     }
 }

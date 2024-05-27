@@ -10,6 +10,7 @@ public class EntretenimentoModel {
     public static final String NOME_LAZER = "nome_lazer";
     public static final String VALOR = "valor";
     public static final String TOTAL = "total";
+    public static final String ID_HOME = "id_home";
 
     public static final String CREATE_TABLE = "CREATE TABLE " + TABELA_NOME +
             "( "
@@ -17,7 +18,8 @@ public class EntretenimentoModel {
             + ID_USUARIO + " NUMERIC NOT NULL, "
             + NOME_LAZER+ " TEXT NOT NULL, "
             + VALOR+ " NUMERIC NOT NULL, "
-            + TOTAL+ " NUMERIC NOT NULL " +
+            + TOTAL+ " NUMERIC NOT NULL, "
+            + ID_HOME + " NUMERIC NOT NULL" +
             ");";
 
     public static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABELA_NOME;
@@ -27,13 +29,15 @@ public class EntretenimentoModel {
     private String nomeLazer;
     private BigDecimal valor;
     private BigDecimal total;
+    private long idHome;
 
     public EntretenimentoModel(){}
-    public EntretenimentoModel(long idUsuario, String nomeLazer, BigDecimal valor, BigDecimal total) {
+    public EntretenimentoModel(long idUsuario, String nomeLazer, BigDecimal valor, BigDecimal total, long idHome) {
         this.idUsuario = idUsuario;
         this.nomeLazer = nomeLazer;
         this.valor = valor;
         this.total = total;
+        this.idHome = idHome;
     }
     public int getId() {
         return id;
@@ -73,5 +77,13 @@ public class EntretenimentoModel {
 
     public void setTotal(BigDecimal total) {
         this.total = total;
+    }
+
+    public long getIdHome() {
+        return idHome;
+    }
+
+    public void setIdHome(long idHome) {
+        this.idHome = idHome;
     }
 }
