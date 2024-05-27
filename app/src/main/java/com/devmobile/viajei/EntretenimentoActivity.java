@@ -24,6 +24,8 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class EntretenimentoActivity extends AppCompatActivity {
 
+    private boolean adicionouEntretenimento;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +38,8 @@ public class EntretenimentoActivity extends AppCompatActivity {
         Button btnAdicionar = findViewById(R.id.btn_adicionar_entretenimento);
         Button btnAvancar = findViewById(R.id.btn_entretenimento_avancar);
         ListView listaEntretenimentos = findViewById(R.id.lista_entretenimentos);
+
+        adicionouEntretenimento = false;
 
         EntretenimentoAdapter adapter = new EntretenimentoAdapter(EntretenimentoActivity.this);
 
@@ -71,12 +75,7 @@ public class EntretenimentoActivity extends AppCompatActivity {
                     valorTotal
             );
 
-            try {
-                EntretenimentoDAO entretenimentoDAO = new EntretenimentoDAO(EntretenimentoActivity.this);
-                entretenimentoDAO.insert(entretenimentoModel);
-            } catch (Exception e) {
-                Toast.makeText(EntretenimentoActivity.this, "Erro ao salvar entretenimento: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
+            saveEntretenimento(entretenimentoModel);
 
             entretenimentos.add(entretenimentoModel);
             adapter.setItens(entretenimentos);
@@ -91,8 +90,25 @@ public class EntretenimentoActivity extends AppCompatActivity {
         });
 
         btnAvancar.setOnClickListener(v -> {
+            if (!adicionouEntretenimento) {
+                Toast.makeText(EntretenimentoActivity.this, "Por favor, adicione o entretenimento!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             Intent intent = new Intent(EntretenimentoActivity.this, RelatorioActivity.class);
             startActivity(intent);
         });
+    }
+
+    private void saveEntretenimento(EntretenimentoModel entretenimentoModel) {
+        try {
+            EntretenimentoDAO entretenimentoDAO = new EntretenimentoDAO(EntretenimentoActivity.this);
+            entretenimentoDAO.insert(entretenimentoModel);
+
+            adicionouEntretenimento = true;
+
+        } catch (Exception e) {
+            Toast.makeText(EntretenimentoActivity.this, "Erro ao salvar entretenimento: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 }

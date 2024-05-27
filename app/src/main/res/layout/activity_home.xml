@@ -82,8 +82,8 @@
 
                     <ImageView
                         android:id="@+id/img_buscar_destino"
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
                         android:src="@drawable/destino"/>
 
                     <LinearLayout

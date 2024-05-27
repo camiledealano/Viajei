@@ -60,7 +60,7 @@ public class EntretenimentoDAO extends AbstractDAO {
                             new String[]{idUsuarioString},
                             null,
                             null,
-                            null);
+                            "_id desc");
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
                 EntretenimentoModel model = cursorToStructure(cursor);

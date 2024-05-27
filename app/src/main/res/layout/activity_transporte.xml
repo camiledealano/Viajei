@@ -132,7 +132,7 @@
                     android:id="@+id/valor_aluguel_carro"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Valor do aluguel?"
+                    android:hint="Valor do aluguel"
                     android:inputType="numberDecimal" />
 
             </LinearLayout>

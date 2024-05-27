@@ -122,12 +122,10 @@ public class TransporteActivity extends AppCompatActivity implements AdapterView
         switch (selectedTransport){
             case 0:
                 insertAviaoTransporte();
-                insertTransporte();
                 adicionouTransporte = true;
                 break;
             case 1:
                 insertCarroTransporte();
-                insertTransporte();
                 adicionouTransporte = true;
                 break;
         }
@@ -149,11 +147,11 @@ public class TransporteActivity extends AppCompatActivity implements AdapterView
         try {
             AviaoTransporteDAO aviaoTransporteDAO = new AviaoTransporteDAO(TransporteActivity.this);
             idNewAviaoTransporte = aviaoTransporteDAO.insert(aviaoTransporteModel);
-
-            Toast.makeText(TransporteActivity.this, "Transporte inserido com sucesso!", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             Toast.makeText(TransporteActivity.this, "Erro ao inserir Dados do transporte: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
+
+        insertTransporte();
     }
 
     private void insertTransporte() {
@@ -175,11 +173,27 @@ public class TransporteActivity extends AppCompatActivity implements AdapterView
     }
 
     private void insertCarroTransporte() {
-        double valorAluguel = checkboxAluguel ? parseDouble(valorAluguelCarro.getText().toString()) : 0;
-        double kmTotalTrajeto = parseDouble(kmTotal.getText().toString());
-        double kmLitro = parseDouble(kmPorLitro.getText().toString());
-        double custoLitro = parseDouble(custoPorLitro.getText().toString());
-        int totalDeVeiculos = parseInt(totalVeiculos.getText().toString());
+        String valorAluguelCarroStr = valorAluguelCarro.getText().toString();
+        String kmTotalStr           = kmTotal.getText().toString();
+        String kmPorLitroStr        = kmPorLitro.getText().toString();
+        String custoPorLitroStr     = custoPorLitro.getText().toString();
+        String totalVeiculosStr     = totalVeiculos.getText().toString();
+
+        if (kmTotalStr.isEmpty() || kmPorLitroStr.isEmpty() || custoPorLitroStr.isEmpty() || totalVeiculosStr.isEmpty()) {
+            Toast.makeText(TransporteActivity.this, "Por favor insira todos os dados!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (valorAluguelCarroStr.isEmpty() && checkboxAluguel) {
+            Toast.makeText(TransporteActivity.this, "Por favor insira o valor do aluguel!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        double valorAluguel = checkboxAluguel ? parseDouble(valorAluguelCarroStr) : 0;
+        double kmTotalTrajeto = parseDouble(kmTotalStr);
+        double kmLitro = parseDouble(kmPorLitroStr);
+        double custoLitro = parseDouble(custoPorLitroStr);
+        int totalDeVeiculos = parseInt(totalVeiculosStr);
 
         double total = TransporteService.calcularTotal(kmTotalTrajeto, kmLitro, custoLitro, totalDeVeiculos, valorAluguel);
 
@@ -198,6 +212,8 @@ public class TransporteActivity extends AppCompatActivity implements AdapterView
         } catch (Exception e) {
             Toast.makeText(TransporteActivity.this, "Erro ao inserir Dados do transporte: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
+
+        insertTransporte();
     }
 
     @Override

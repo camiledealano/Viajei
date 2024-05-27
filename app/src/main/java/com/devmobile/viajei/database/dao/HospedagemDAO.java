@@ -62,7 +62,7 @@ public class HospedagemDAO extends AbstractDAO {
                             new String[]{idUsuarioString},
                             null,
                             null,
-                            null);
+                            "_id desc");
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
                 model = cursorToStructure(cursor);
