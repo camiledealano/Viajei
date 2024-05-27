@@ -26,6 +26,7 @@ public class Extensions {
         else return 0;
     }
 
+
     public static String formatToBRL(double value){
         Locale localeBR = new Locale("pt", "BR");
         NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(localeBR);

@@ -26,19 +26,37 @@ public class EntretenimentoDAO extends AbstractDAO {
             EntretenimentoModel.ID_USUARIO,
             EntretenimentoModel.NOME_LAZER,
             EntretenimentoModel.VALOR,
-            EntretenimentoModel.TOTAL
+            EntretenimentoModel.TOTAL,
+            EntretenimentoModel.ID_HOME
     };
-    public void insert(EntretenimentoModel entretenimentoModel) {
+    public void insertOrUpdate(EntretenimentoModel entretenimentoModel) {
         try {
             open();
+
+            String idHomeString = Long.toString(entretenimentoModel.getIdHome());
+            Cursor cursor = db.query(
+                    EntretenimentoModel.TABELA_NOME,
+                    colunas,
+                    EntretenimentoModel.ID_HOME + " = ?",
+                    new String[]{idHomeString},
+                    null,
+                    null,
+                    null
+            );
 
             ContentValues values = new ContentValues();
             values.put(EntretenimentoModel.ID_USUARIO, entretenimentoModel.getIdUsuario());
             values.put(EntretenimentoModel.NOME_LAZER, entretenimentoModel.getNomeLazer());
             values.put(EntretenimentoModel.VALOR, entretenimentoModel.getValor().toString());
             values.put(EntretenimentoModel.TOTAL, entretenimentoModel.getTotal().toString());
+            values.put(EntretenimentoModel.ID_HOME, entretenimentoModel.getIdHome());
 
-            db.insert(EntretenimentoModel.TABELA_NOME, null, values);
+            if (cursor.moveToFirst()) {
+                db.update(EntretenimentoModel.TABELA_NOME, values, EntretenimentoModel.ID_HOME + " = ?", new String[]{idHomeString});
+            } else {
+                db.insert(EntretenimentoModel.TABELA_NOME, null, values);
+            }
+            cursor.close();
         } finally {
             close();
         }
@@ -75,6 +93,37 @@ public class EntretenimentoDAO extends AbstractDAO {
         return modelList;
     }
 
+    public List<EntretenimentoModel> findByIdHome(final long idHome) {
+
+        List<EntretenimentoModel> modelList = new ArrayList<>();
+
+        String idHomeString = Long.toString(idHome);
+
+        try {
+            open();
+            Cursor cursor = db.query
+                    (
+                            EntretenimentoModel.TABELA_NOME,
+                            colunas,
+                            EntretenimentoModel.ID_HOME + " = ? ",
+                            new String[]{idHomeString},
+                            null,
+                            null,
+                            null);
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                EntretenimentoModel model = cursorToStructure(cursor);
+                modelList.add(model);
+                cursor.moveToNext();
+            }
+        }
+        finally {
+            close();
+        }
+
+        return modelList;
+    }
+
     public final EntretenimentoModel cursorToStructure(Cursor cursor) {
         EntretenimentoModel model = new EntretenimentoModel();
         model.setId(cursor.getInt(0));
@@ -82,6 +131,7 @@ public class EntretenimentoDAO extends AbstractDAO {
         model.setNomeLazer(cursor.getString(2));
         model.setValor(new BigDecimal(cursor.getString(3)));
         model.setTotal(new BigDecimal(cursor.getString(4)));
+        model.setIdHome(cursor.getLong(4));
         return model;
     }
 }

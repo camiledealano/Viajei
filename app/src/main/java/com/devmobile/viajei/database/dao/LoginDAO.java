@@ -26,7 +26,6 @@ public class LoginDAO extends AbstractDAO {
         String selection = UsuarioModel.EMAIL + " = ?";
         String[] selectionArgs = { email };
 
-        //TODO: corrigir pq ta dando npe aqui
         Cursor cursor = db.query(
                 UsuarioModel.TABELA_NOME,
                 projection,
