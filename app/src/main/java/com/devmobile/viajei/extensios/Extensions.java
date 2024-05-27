@@ -1,5 +1,8 @@
 package com.devmobile.viajei.extensios;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class Extensions {
     public static double parseDouble(String strNumber) {
         if (strNumber != null && strNumber.length() > 0) {
@@ -24,6 +27,8 @@ public class Extensions {
     }
 
     public static String formatToBRL(double value){
-        return String.format("R$ %.2f", value);
+        Locale localeBR = new Locale("pt", "BR");
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(localeBR);
+        return currencyFormatter.format(value);
     }
 }

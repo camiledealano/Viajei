@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.devmobile.viajei.adapter.EntretenimentoAdapter;
 import com.devmobile.viajei.database.dao.EntretenimentoDAO;
 import com.devmobile.viajei.database.model.EntretenimentoModel;
+import com.devmobile.viajei.extensios.Extensions;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -82,7 +83,7 @@ public class EntretenimentoActivity extends AppCompatActivity {
             listaEntretenimentos.setAdapter(adapter);
 
             TextView totalEntretenimentoTextView = findViewById(R.id.total_entretenimento);
-            String textoTotalEntretenimento = getString(R.string.total_parcial) + valorTotal;
+            String textoTotalEntretenimento = getString(R.string.total_parcial) + Extensions.formatToBRL(valorTotal.doubleValue());
             totalEntretenimentoTextView.setText(textoTotalEntretenimento);
 
             nomeEntretenimento.setText("");

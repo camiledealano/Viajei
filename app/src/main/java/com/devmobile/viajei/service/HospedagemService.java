@@ -14,9 +14,8 @@ public class HospedagemService {
      * @param qtdQuartos A quantidade de quartos reservados.
      * @return O custo total da hospedagem.
      */
-    public String calcularTotalHospedagem(Double custoMedio, Integer qtdNoites, Integer qtdQuartos) {
+    public double calcularTotalHospedagem(Double custoMedio, Integer qtdNoites, Integer qtdQuartos) {
         double total = custoMedio * qtdNoites * qtdQuartos;
-        DecimalFormat df = new DecimalFormat("###,##0.00", new DecimalFormatSymbols(Locale.getDefault()));
-        return df.format(total);
+        return total;
     }
 }

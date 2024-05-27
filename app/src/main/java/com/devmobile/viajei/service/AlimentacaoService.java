@@ -15,9 +15,8 @@ public class AlimentacaoService {
      * @param diasViagem Dias totais de viagem.
      * @return O custo total da alimentação.
      */
-    public String calcularAlimentacao(Double custoMedioAlimentacao, Integer qtdRefeicoes, Integer qtdViajantes, Integer diasViagem) {
+    public double calcularAlimentacao(Double custoMedioAlimentacao, Integer qtdRefeicoes, Integer qtdViajantes, Integer diasViagem) {
         Double total = ((qtdRefeicoes * qtdViajantes) * custoMedioAlimentacao) * diasViagem;
-        DecimalFormat df = new DecimalFormat("###,##0.00", new DecimalFormatSymbols(Locale.getDefault()));
-        return df.format(total);
+        return total;
     }
 }

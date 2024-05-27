@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.devmobile.viajei.database.dao.HospedagemDAO;
 import com.devmobile.viajei.database.model.HospedagemModel;
+import com.devmobile.viajei.extensios.Extensions;
 import com.devmobile.viajei.service.HospedagemService;
 
 public class HospedagemActivity extends AppCompatActivity {
@@ -59,10 +60,10 @@ public class HospedagemActivity extends AppCompatActivity {
             Integer qtdQuartosValue = Integer.valueOf(qtdQuartosStr);
             Integer qtdNoitesValue  = Integer.valueOf(qtdNoitesStr);
 
-            String totalHospedagem = hospedagemService.calcularTotalHospedagem(custoMedioValue, qtdNoitesValue, qtdQuartosValue);
+            double totalHospedagem = hospedagemService.calcularTotalHospedagem(custoMedioValue, qtdNoitesValue, qtdQuartosValue);
 
             TextView totalHospedagemTextView = findViewById(R.id.total_hospedagem);
-            String textoTotalHospedagem = getString(R.string.total_parcial) + totalHospedagem;
+            String textoTotalHospedagem = getString(R.string.total_parcial) + Extensions.formatToBRL(totalHospedagem);
             totalHospedagemTextView.setText(textoTotalHospedagem);
         });
 
@@ -82,7 +83,7 @@ public class HospedagemActivity extends AppCompatActivity {
             Integer qtdPessoasValue = Integer.valueOf(qtdPessoasStr);
             Integer qtdNoitesValue  = Integer.valueOf(qtdNoitesStr);
 
-            Double totalHospedagemValue = Double.valueOf(hospedagemService.calcularTotalHospedagem(custoMedioValue, qtdNoitesValue, qtdQuartosValue));
+            Double totalHospedagemValue = hospedagemService.calcularTotalHospedagem(custoMedioValue, qtdNoitesValue, qtdQuartosValue);
 
             HospedagemModel hospedagemModel = new HospedagemModel(
                     idUsuario,

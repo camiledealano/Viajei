@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -88,11 +89,16 @@ public class RelatorioActivity extends AppCompatActivity {
         EntretenimentoDAO entretenimentoDAO = new EntretenimentoDAO(RelatorioActivity.this);
         List<EntretenimentoModel> entretenimentoModelList =  entretenimentoDAO.findByIdUsuario(idUsuario);
 
+        if (entretenimentoModelList == null || entretenimentoModelList.isEmpty()) {
+            Toast.makeText(RelatorioActivity.this, "Nenhum entretenimento encontrado para o usuário especificado.", Toast.LENGTH_LONG).show();
+            return 0;
+        }
+
         BigDecimal total = entretenimentoModelList.stream()
                                                   .map(EntretenimentoModel::getTotal)
                                                   .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        totalAlimentacao.setText(formatToBRL(total.doubleValue()));
+        totalEntretenimento.setText(formatToBRL(total.doubleValue()));
 
         return total.doubleValue();
     }
@@ -100,7 +106,12 @@ public class RelatorioActivity extends AppCompatActivity {
         AlimentacaoDAO alimentacaoDAO = new AlimentacaoDAO(RelatorioActivity.this);
         AlimentacaoModel AlimentacaoModel = alimentacaoDAO.FindByIdUsuario(idUsuario);
 
-        double total =  AlimentacaoModel.getTotal();
+        if (AlimentacaoModel == null) {
+            Toast.makeText(RelatorioActivity.this, "Alimentação não encontrada para o usuário especificado.", Toast.LENGTH_LONG).show();
+            return 0;
+        }
+
+        double total = AlimentacaoModel.getTotal();
         totalAlimentacao.setText(formatToBRL(total));
 
         return total;
@@ -111,6 +122,12 @@ public class RelatorioActivity extends AppCompatActivity {
         AviaoTransporteDAO aviaoTransporteDAO = new AviaoTransporteDAO(RelatorioActivity.this);
 
         TransporteModel transporteModel = transporteDAO.findByIdUsuario(idUsuario);
+
+        if(transporteModel == null){
+            Toast.makeText(RelatorioActivity.this, "Transporte não encontrado para o usuário especificado.", Toast.LENGTH_LONG).show();
+            return 0;
+        }
+
         CarroTransporteModel carroTransporteModel = carroTransporteDAO.findById(transporteModel.getIdCarroTransporte());
         AviaoTransporteModel aviaoTransporteModel = aviaoTransporteDAO.findById(transporteModel.getIdAviaoTransporte());
 
@@ -123,7 +140,7 @@ public class RelatorioActivity extends AppCompatActivity {
             total+= aviaoTransporteModel.getValorPassagem();
         }
 
-        totalHospedagem.setText(formatToBRL(total));
+        totalTransporte.setText(formatToBRL(total));
 
         return total;
     }
@@ -131,10 +148,14 @@ public class RelatorioActivity extends AppCompatActivity {
         HospedagemDAO hospedagemDAO = new HospedagemDAO(RelatorioActivity.this);
         HospedagemModel hospedagemModel = hospedagemDAO.FindByIdUsuario(idUsuario);
 
+        if (hospedagemModel == null) {
+            Toast.makeText(RelatorioActivity.this, "Hospedagem não encontrada para o usuário especificado.", Toast.LENGTH_LONG).show();
+            return 0;
+        }
+
         double total = hospedagemModel.getTotal();
         totalHospedagem.setText(formatToBRL(total));
-
-        return  total;
+        return total;
     }
     private void getSharedPreferencesData() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(RelatorioActivity.this);

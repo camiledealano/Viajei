@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.devmobile.viajei.database.dao.AlimentacaoDAO;
 import com.devmobile.viajei.database.model.AlimentacaoModel;
+import com.devmobile.viajei.extensios.Extensions;
 import com.devmobile.viajei.service.AlimentacaoService;
 
 public class AlimentacaoActivity extends AppCompatActivity {
@@ -54,10 +55,10 @@ public class AlimentacaoActivity extends AppCompatActivity {
             Double custoMedioAlimentacaoValue  = Double.valueOf(custoMedioAlimentacaoStr);
             Integer qtdRefeicoesValue          = Integer.valueOf(qtdRefeicoesStr);
 
-            String totalAlimentacao = alimentacaoService.calcularAlimentacao(custoMedioAlimentacaoValue, qtdRefeicoesValue, qtdPessoas, diasViagem);
+            double totalAlimentacao = alimentacaoService.calcularAlimentacao(custoMedioAlimentacaoValue, qtdRefeicoesValue, qtdPessoas, diasViagem);
 
             TextView totalAlimentacaoTextView = findViewById(R.id.total_alimentacao);
-            String textoTotalAlimentacao = getString(R.string.total_parcial) + totalAlimentacao;
+            String textoTotalAlimentacao = getString(R.string.total_parcial) + Extensions.formatToBRL(totalAlimentacao);
             totalAlimentacaoTextView.setText(textoTotalAlimentacao);
         });
 
@@ -73,8 +74,7 @@ public class AlimentacaoActivity extends AppCompatActivity {
             Double custoMedioAlimentacaoValue  = Double.valueOf(custoMedioAlimentacaoStr);
             Integer qtdRefeicoesValue          = Integer.valueOf(qtdRefeicoesStr);
 
-            //ta dando pau de valor aqui
-            Double totalAlimentacao = Double.valueOf(alimentacaoService.calcularAlimentacao(custoMedioAlimentacaoValue, qtdRefeicoesValue, qtdPessoas, diasViagem));
+            Double totalAlimentacao = alimentacaoService.calcularAlimentacao(custoMedioAlimentacaoValue, qtdRefeicoesValue, qtdPessoas, diasViagem);
 
             AlimentacaoModel alimentacaoModel = new AlimentacaoModel(
                     idUsuario,

@@ -128,12 +128,11 @@
                 android:layout_marginEnd="8dp"
                 android:textColor="@color/black" />
 
-            <!-- Valor do relatório -->
             <TextView
                 android:id="@+id/rel_total_hospedagem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="R$ 100,00"
+                android:text="R$ 0,00"
                 android:textSize="16sp"
                 android:textColor="@color/black" />
 
@@ -163,7 +162,7 @@
                 android:id="@+id/rel_total_transporte"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="R$ 100,00"
+                android:text="R$ 0,00"
                 android:textSize="16sp"
                 android:textColor="@color/black" />
 
@@ -193,7 +192,7 @@
                 android:id="@+id/rel_total_alimentacao"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="R$ 100,00"
+                android:text="R$ 0,00"
                 android:textSize="16sp"
                 android:textColor="@color/black" />
 
@@ -223,7 +222,7 @@
                 android:id="@+id/rel_total_entretenimento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="R$ 100,00"
+                android:text="R$ 0,00"
                 android:textSize="16sp"
                 android:textColor="@color/black" />
 
@@ -251,7 +250,7 @@
                 android:id="@+id/rel_total_pessoa"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Valor: R$ 200,00"
+                android:text="Valor: R$ 0,00"
                 android:textSize="16sp"/>
 
             <TextView
@@ -266,7 +265,7 @@
                 android:id="@+id/rel_total_viagem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Valor: R$ 200,00"
+                android:text="Valor: R$ 0,00"
                 android:textSize="19sp"/>
 
         </LinearLayout>

@@ -23,7 +23,8 @@ public class CarroTransporteDAO extends AbstractDAO {
             CarroTransporteModel.KILOMETRO_TOTAL,
             CarroTransporteModel.KM_LITRO,
             CarroTransporteModel.CUSTO_LITRO,
-            CarroTransporteModel.TOTAL_VEICULOS
+            CarroTransporteModel.TOTAL_VEICULOS,
+            CarroTransporteModel.TOTAL
 
     };
 
@@ -83,7 +84,8 @@ public class CarroTransporteDAO extends AbstractDAO {
         model.setKilometroTotal(cursor.getDouble(2));
         model.setKmLitro(cursor.getDouble(3));
         model.setCustoLitro(cursor.getDouble(4));
-        model.setKilometroTotal(cursor.getDouble(5));
+        model.setTotalVeiculos(cursor.getInt(5));
+        model.setTotal(cursor.getDouble(6));
 
         return model;
     }

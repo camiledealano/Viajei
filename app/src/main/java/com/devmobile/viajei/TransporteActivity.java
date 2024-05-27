@@ -40,6 +40,8 @@ public class TransporteActivity extends AppCompatActivity implements AdapterView
     EditText kmTotal, totalVeiculos, custoPorLitro, kmPorLitro, valorAluguelCarro, valorPassagemAerea;
     TextView destinoTextView, totalCarroTransporteTextView;
 
+    boolean checkboxAluguel;
+
     int selectedTransport,qtdPessoas;
     long idUsuario;
     long idNewAviaoTransporte = 0, idNewCarroTransporte = 0;
@@ -149,7 +151,6 @@ public class TransporteActivity extends AppCompatActivity implements AdapterView
             idNewAviaoTransporte = aviaoTransporteDAO.insert(aviaoTransporteModel);
 
             Toast.makeText(TransporteActivity.this, "Transporte inserido com sucesso!", Toast.LENGTH_SHORT).show();
-            //TODO: redirecionar pra home
         } catch (Exception e) {
             Toast.makeText(TransporteActivity.this, "Erro ao inserir Dados do transporte: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -174,13 +175,13 @@ public class TransporteActivity extends AppCompatActivity implements AdapterView
     }
 
     private void insertCarroTransporte() {
-        double valorAluguel = parseDouble(valorAluguelCarro.getText().toString());
+        double valorAluguel = checkboxAluguel ? parseDouble(valorAluguelCarro.getText().toString()) : 0;
         double kmTotalTrajeto = parseDouble(kmTotal.getText().toString());
         double kmLitro = parseDouble(kmPorLitro.getText().toString());
         double custoLitro = parseDouble(custoPorLitro.getText().toString());
         int totalDeVeiculos = parseInt(totalVeiculos.getText().toString());
 
-        double total = Double.parseDouble(TransporteService.calcularTotal(kmTotalTrajeto, kmLitro, custoLitro, totalDeVeiculos, valorAluguel));
+        double total = TransporteService.calcularTotal(kmTotalTrajeto, kmLitro, custoLitro, totalDeVeiculos, valorAluguel);
 
         CarroTransporteModel carroTransporteModel = new CarroTransporteModel(
                 valorAluguel,
@@ -194,9 +195,6 @@ public class TransporteActivity extends AppCompatActivity implements AdapterView
         try {
             CarroTransporteDAO carroTransporteDAO = new CarroTransporteDAO(TransporteActivity.this);
             idNewCarroTransporte = carroTransporteDAO.insert(carroTransporteModel);
-
-            Toast.makeText(TransporteActivity.this, "Transporte inserido com sucesso!", Toast.LENGTH_SHORT).show();
-            //TODO: redirecionar pra home
         } catch (Exception e) {
             Toast.makeText(TransporteActivity.this, "Erro ao inserir Dados do transporte: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -253,7 +251,7 @@ public class TransporteActivity extends AppCompatActivity implements AdapterView
             double kmLitro = parseDouble(kmPorLitro.getText().toString());
             double custoLitro = parseDouble(custoPorLitro.getText().toString());
             int totalDeVeiculos = parseInt(totalVeiculos.getText().toString());
-            double total = Double.parseDouble(TransporteService.calcularTotal(kmTotalTrajeto, kmLitro, custoLitro, totalDeVeiculos, valorAluguel));
+            double total = TransporteService.calcularTotal(kmTotalTrajeto, kmLitro, custoLitro, totalDeVeiculos, valorAluguel);
 
             if(Double.isNaN(total) || Double.isInfinite(total)){
                 totalCarroTransporteTextView.setText(String.format("Insira todos os dados."));
@@ -268,6 +266,7 @@ public class TransporteActivity extends AppCompatActivity implements AdapterView
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        checkboxAluguel = isChecked;
         LinearLayout layoutAluguelCarro = findViewById(R.id.layout_aluguel_carro);
 
         if (isChecked) {
