@@ -75,6 +75,7 @@ public class TransporteActivity extends AppCompatActivity implements AdapterView
         custoPorLitro.addTextChangedListener(this);
         totalVeiculos.addTextChangedListener(this);
         kmTotal.addTextChangedListener(this);
+        //teste
 
         getSharedPreferencesData();
         getTransporteArrayData();
