@@ -5,10 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 
 import com.devmobile.viajei.database.DBOpenHelper;
-import com.devmobile.viajei.database.model.AlimentacaoModel;
 import com.devmobile.viajei.database.model.AviaoTransporteModel;
-import com.devmobile.viajei.database.model.TransporteModel;
-import com.devmobile.viajei.database.model.UsuarioModel;
 import com.devmobile.viajei.database.utils.AbstractDAO;
 
 public class AviaoTransporteDAO extends AbstractDAO {

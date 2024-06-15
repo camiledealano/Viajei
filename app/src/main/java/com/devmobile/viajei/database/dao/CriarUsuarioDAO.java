@@ -3,7 +3,6 @@ package com.devmobile.viajei.database.dao;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.widget.Toast;
 
 import com.devmobile.viajei.database.DBOpenHelper;
 import com.devmobile.viajei.database.model.UsuarioModel;

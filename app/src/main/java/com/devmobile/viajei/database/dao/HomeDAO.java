@@ -8,9 +8,6 @@ import com.devmobile.viajei.database.DBOpenHelper;
 import com.devmobile.viajei.database.model.HomeModel;
 import com.devmobile.viajei.database.utils.AbstractDAO;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class HomeDAO extends AbstractDAO {
 
     private final String[]

@@ -8,8 +8,6 @@ import androidx.annotation.NonNull;
 
 import com.devmobile.viajei.database.DBOpenHelper;
 import com.devmobile.viajei.database.model.HospedagemModel;
-import com.devmobile.viajei.database.model.TransporteModel;
-import com.devmobile.viajei.database.model.UsuarioModel;
 import com.devmobile.viajei.database.utils.AbstractDAO;
 
 public class HospedagemDAO extends AbstractDAO {

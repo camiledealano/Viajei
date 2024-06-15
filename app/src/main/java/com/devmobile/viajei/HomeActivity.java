@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,9 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.devmobile.viajei.database.dao.HomeDAO;
 import com.devmobile.viajei.database.model.HomeModel;
-import com.devmobile.viajei.database.model.HospedagemModel;
-
-import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
     String usuario, destino_destino;

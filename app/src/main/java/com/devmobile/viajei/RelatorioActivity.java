@@ -7,16 +7,17 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
+import com.devmobile.viajei.api.Api;
+import com.devmobile.viajei.api.model.Resposta;
+import com.devmobile.viajei.api.model.Viagem;
+import com.devmobile.viajei.api.model.mapper.ViagemMapper;
 import com.devmobile.viajei.database.dao.AlimentacaoDAO;
 import com.devmobile.viajei.database.dao.AviaoTransporteDAO;
 import com.devmobile.viajei.database.dao.CarroTransporteDAO;
@@ -33,15 +34,27 @@ import com.devmobile.viajei.database.model.TransporteModel;
 import java.math.BigDecimal;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class RelatorioActivity extends AppCompatActivity {
 
     TextView totalPorPessoa, totalHospedagem, totalTransporte, totalAlimentacao,
             totalEntretenimento, totalViagem, qtdPessoa, qtdNoite, relNomeDestino;
     int qtdPessoas, qtdNoites;
     long idUsuario, idHome;
+    double total, totalPessoa;
     String destino;
-
+    List<EntretenimentoModel> entretenimentoModelList;
+    AlimentacaoModel alimentacaoModel;
+    TransporteModel transporteModel;
+    AviaoTransporteModel aviaoTransporteModel;
+    CarroTransporteModel carroTransporteModel;
+    HospedagemModel hospedagemModel;
     Button btnHome;
+
+    private static int CODIGOCONTA = 131469;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +74,20 @@ public class RelatorioActivity extends AppCompatActivity {
         relNomeDestino = findViewById(R.id.rel_nome_destino);
         btnHome = findViewById(R.id.btn_home);
 
+        EntretenimentoDAO entretenimentoDAO = new EntretenimentoDAO(RelatorioActivity.this);
+        AlimentacaoDAO alimentacaoDAO = new AlimentacaoDAO(RelatorioActivity.this);
+        TransporteDAO transporteDAO = new TransporteDAO(RelatorioActivity.this);
+        CarroTransporteDAO carroTransporteDAO = new CarroTransporteDAO(RelatorioActivity.this);
+        AviaoTransporteDAO aviaoTransporteDAO = new AviaoTransporteDAO(RelatorioActivity.this);
+        HospedagemDAO hospedagemDAO = new HospedagemDAO(RelatorioActivity.this);
+
+        entretenimentoModelList =  entretenimentoDAO.findByIdHome(idUsuario);
+        alimentacaoModel = alimentacaoDAO.findByIdHome(idHome);
+        transporteModel = transporteDAO.findByIdHome(idHome);
+        carroTransporteModel = carroTransporteDAO.findById(transporteModel.getIdCarroTransporte());
+        aviaoTransporteModel = aviaoTransporteDAO.findById(transporteModel.getIdAviaoTransporte());
+        hospedagemModel = hospedagemDAO.findByIdHome(idHome);
+
         SetTextEditView();
 
         double totalHospedagem = calcularHospedagem();
@@ -70,6 +97,33 @@ public class RelatorioActivity extends AppCompatActivity {
 
         calcularTotalPorPessoa(totalHospedagem, totalTransporte, totalAlimentacao, totalEntretenimento);
         calcularTotal(totalHospedagem, totalTransporte, totalAlimentacao, totalEntretenimento);
+
+        Viagem viagem = ViagemMapper.Mapper(alimentacaoModel, aviaoTransporteModel, carroTransporteModel, entretenimentoModelList, hospedagemModel);
+        viagem.setTotalViajantes(qtdPessoas);
+        viagem.setDuracaoViagem(qtdNoites);
+        viagem.setCustoTotalViagem(total);
+        viagem.setCustoPorPessoa(totalPessoa);
+        viagem.setLocal(destino);
+        viagem.setIdConta(CODIGOCONTA);
+
+        Api.postViagem(viagem, new Callback<Resposta>() {
+            @Override
+            public void onResponse(Call<Resposta> call, Response<Resposta> response) {
+                if (response != null && response.isSuccessful()) {
+                    Resposta r = response.body();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(RelatorioActivity.this);
+                    builder.setMessage(r.getMensagem());
+                    builder.create().show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Resposta> call, Throwable t) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(RelatorioActivity.this);
+                builder.setMessage(t.getMessage());
+                builder.create().show();
+            }
+        });
 
         btnHome.setOnClickListener(v -> {
             Intent intent = new Intent(RelatorioActivity.this, HomeActivity.class);
@@ -83,22 +137,16 @@ public class RelatorioActivity extends AppCompatActivity {
         qtdNoite.setText(Integer.toString(qtdNoites));
         relNomeDestino.setText("Relatório de custos para: " + destino);
     }
-
     private void calcularTotal(double totalHospedagem, double totalTransporte, double totalAlimentacao, double totalEntretenimento) {
-        double total =  (totalHospedagem + totalTransporte + totalAlimentacao + totalEntretenimento);
+        total =  (totalHospedagem + totalTransporte + totalAlimentacao + totalEntretenimento);
         totalViagem.setText(formatToBRL(total));
     }
-
     private void calcularTotalPorPessoa(double totalHospedagem, double totalTransporte, double totalAlimentacao, double totalEntretenimento) {
-        double total =  (totalHospedagem + totalTransporte + totalAlimentacao + totalEntretenimento) / qtdPessoas;
+        totalPessoa =  (totalHospedagem + totalTransporte + totalAlimentacao + totalEntretenimento) / qtdPessoas;
 
-        totalPorPessoa.setText(formatToBRL(total));
+        totalPorPessoa.setText(formatToBRL(totalPessoa));
     }
-
     private double calcularTotalEntretenimento() {
-        EntretenimentoDAO entretenimentoDAO = new EntretenimentoDAO(RelatorioActivity.this);
-        List<EntretenimentoModel> entretenimentoModelList =  entretenimentoDAO.findByIdHome(idUsuario);
-
         if (entretenimentoModelList == null || entretenimentoModelList.isEmpty()) {
             Toast.makeText(RelatorioActivity.this, "Nenhum entretenimento encontrado para o usuário especificado.", Toast.LENGTH_LONG).show();
             return 0;
@@ -113,34 +161,22 @@ public class RelatorioActivity extends AppCompatActivity {
         return total.doubleValue();
     }
     private double calcularAlimentacao() {
-        AlimentacaoDAO alimentacaoDAO = new AlimentacaoDAO(RelatorioActivity.this);
-        AlimentacaoModel AlimentacaoModel = alimentacaoDAO.findByIdHome(idHome);
-
-        if (AlimentacaoModel == null) {
+        if (alimentacaoModel == null) {
             Toast.makeText(RelatorioActivity.this, "Alimentação não encontrada para o usuário especificado.", Toast.LENGTH_LONG).show();
             return 0;
         }
 
-        double total = AlimentacaoModel.getTotal();
+        double total = alimentacaoModel.getTotal();
         totalAlimentacao.setText(formatToBRL(total));
 
         return total;
     }
     private double calcularTransporte() {
-        TransporteDAO transporteDAO = new TransporteDAO(RelatorioActivity.this);
-        CarroTransporteDAO carroTransporteDAO = new CarroTransporteDAO(RelatorioActivity.this);
-        AviaoTransporteDAO aviaoTransporteDAO = new AviaoTransporteDAO(RelatorioActivity.this);
-
-        TransporteModel transporteModel = transporteDAO.findByIdHome(idHome);
-
         if(transporteModel == null){
             Toast.makeText(RelatorioActivity.this, "Transporte não encontrado para o usuário especificado.", Toast.LENGTH_LONG).show();
             return 0;
         }
-
-        CarroTransporteModel carroTransporteModel = carroTransporteDAO.findById(transporteModel.getIdCarroTransporte());
-        AviaoTransporteModel aviaoTransporteModel = aviaoTransporteDAO.findById(transporteModel.getIdAviaoTransporte());
-
+        
         double total = 0;
         if(carroTransporteModel != null){
             total = carroTransporteModel.getTotal();
@@ -155,8 +191,6 @@ public class RelatorioActivity extends AppCompatActivity {
         return total;
     }
     private double calcularHospedagem() {
-        HospedagemDAO hospedagemDAO = new HospedagemDAO(RelatorioActivity.this);
-        HospedagemModel hospedagemModel = hospedagemDAO.findByIdHome(idHome);
 
         if (hospedagemModel == null) {
             Toast.makeText(RelatorioActivity.this, "Hospedagem não encontrada para o usuário especificado.", Toast.LENGTH_LONG).show();

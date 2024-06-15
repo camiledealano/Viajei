@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.devmobile.viajei.database.dao.HospedagemDAO;
-import com.devmobile.viajei.database.model.HomeModel;
 import com.devmobile.viajei.database.model.HospedagemModel;
 import com.devmobile.viajei.extensios.Extensions;
 import com.devmobile.viajei.service.HospedagemService;

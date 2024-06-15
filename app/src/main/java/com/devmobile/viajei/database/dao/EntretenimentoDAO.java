@@ -6,8 +6,6 @@ import android.database.Cursor;
 
 import com.devmobile.viajei.database.DBOpenHelper;
 import com.devmobile.viajei.database.model.EntretenimentoModel;
-import com.devmobile.viajei.database.model.TransporteModel;
-import com.devmobile.viajei.database.model.UsuarioModel;
 import com.devmobile.viajei.database.utils.AbstractDAO;
 
 import java.math.BigDecimal;
