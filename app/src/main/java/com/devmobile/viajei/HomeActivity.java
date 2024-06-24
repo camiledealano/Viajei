@@ -2,6 +2,7 @@ package com.devmobile.viajei;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.wifi.hotspot2.pps.HomeSp;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -12,10 +13,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.devmobile.viajei.api.Api;
+import com.devmobile.viajei.api.model.Hospedagem;
+import com.devmobile.viajei.api.model.Resposta;
+import com.devmobile.viajei.api.model.Viagem;
 import com.devmobile.viajei.database.dao.HomeDAO;
 import com.devmobile.viajei.database.model.HomeModel;
+
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeActivity extends AppCompatActivity {
     String usuario, destino_destino;
@@ -86,15 +98,27 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void buscaSimulacao(long idUsuario) {
-        HomeDAO homeDAO = new HomeDAO(HomeActivity.this);
-        HomeModel model = homeDAO.findByIdUsuario(idUsuario);
 
-        if (model != null) {
-            LinearLayout layoutSimulacao = findViewById(R.id.container_simulacao);
-            TextView nomeDestinoCriadoTextView = findViewById(R.id.nome_destino_criado);
-            nomeDestinoCriadoTextView.setText(model.getNomeDestino());
+        Api.getViagem(131469, new Callback<ArrayList<Viagem>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Viagem>> call, Response<ArrayList<Viagem>> response) {
+                if (response != null && response.isSuccessful()) {
+                    ArrayList<Viagem> viagens = response.body();
+                    if (!viagens.isEmpty()) {
+                        viagens.forEach(v -> {
+                            LinearLayout layoutSimulacao = findViewById(R.id.container_simulacao);
+                            TextView nomeDestinoCriadoTextView = findViewById(R.id.nome_destino_criado);
+                            nomeDestinoCriadoTextView.setText(v.getLocal());
+                            layoutSimulacao.setVisibility(View.VISIBLE);
+                        });
+                    }
+                }
+            }
 
-            layoutSimulacao.setVisibility(View.VISIBLE);
-        }
+            @Override
+            public void onFailure(Call<ArrayList<Viagem>> call, Throwable t) {
+                Toast.makeText(HomeActivity.this, "Erro ao buscar viagens salvas.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

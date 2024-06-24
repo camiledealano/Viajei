@@ -1,8 +1,11 @@
 package com.devmobile.viajei.api;
 
 import com.devmobile.viajei.api.endpoint.ViagemEndPoint;
+import com.devmobile.viajei.api.model.Hospedagem;
 import com.devmobile.viajei.api.model.Resposta;
 import com.devmobile.viajei.api.model.Viagem;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -18,9 +21,9 @@ public class Api {
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
-    public static void getViagem(int codigoConta, final Callback<Viagem> callback) {
+    public static void getViagem(int codigoConta, final Callback<ArrayList<Viagem>> callback) {
         ViagemEndPoint endPoint = retrofit.create(ViagemEndPoint.class);
-        Call<Viagem> call = endPoint.getViagemPorConta(codigoConta);
+        Call<ArrayList<Viagem>> call = endPoint.getViagemPorConta(codigoConta);
         call.enqueue(callback);
     }
 
